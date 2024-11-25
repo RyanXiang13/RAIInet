@@ -12,8 +12,8 @@ private:
     Player(int id, std::vector<std::unique_ptr<Ability>> a, std::vector<std::unique_ptr<Link>> ol, std::vector<std::unique_ptr<Link>> kl, std::vector<std::unique_ptr<Link>> dl);
     int playerID;
     std::vector<int> abilities;                         // stores all counts of abilities, 0 is ignored and 1-8 are the IDs, respectively
-    std::vector<std::unique_ptr<Link>> ownedLinks;      // stores all owned link objects
-    std::vector<std::string> knownLinks;                // stores all link objects that the player knows the opponent has
+    std::vector<std::string> ownedLinks;                // stores all names of links that the player owns
+    std::vector<std::string> knownLinks;                // stores all names of links that the player knows the opponent has
     std::vector<std::unique_ptr<Link>> downloadedLinks; // stores all link objects that the player has downloaded
 
 public:
