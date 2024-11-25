@@ -10,10 +10,10 @@ private:
     int col;
     int strength;
     bool isVirus;
-    bool isOccupied;
     bool hasAbility;
     int playerID;
-    bool isDownloaded;
+    bool isDownloaded; // always check this first to see if the link is inactive
+    std::vector<std::unique_ptr<Ability>> abilities;
     Link(int r, int c, bool v, bool o, bool h, bool d, int id, bool isD);
 
 public:
@@ -21,19 +21,18 @@ public:
     int getRow() const;
     int getCol() const;
     int getStrength() const;
-    bool isVirus() const;
-    bool isOccupied() const;
-    bool hasAbility() const;
+    bool getIsVirus() const;
+    bool getHasAbility() const;
     int getPlayerID() const;
-    bool isDownloaded() const;
+    bool getIsDownloaded() const;
+    std::string getName() const; // create the name based on isVirus and strength
     void setRow(int r);
     void setCol(int c);
     void setStrength(int s);
-    void setVirus(bool v);
-    void setOccupied(bool o);
+    void setIsVirus(bool v);
     void setHasAbility(bool h);
     void setPlayerID(int id);
-    void setDownloaded(bool d);
+    void setIsDownloaded(bool d);
 
     // special action cells functions
     bool isOnFirewall() const;
