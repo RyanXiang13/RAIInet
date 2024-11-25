@@ -8,6 +8,7 @@
 class Teleport : public Ability
 {
 private:
+    static const int ID = 8;
     Teleport(int playerID = -1, bool isActive = false, bool isUsed = false);
 
 public:

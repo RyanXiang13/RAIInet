@@ -8,6 +8,7 @@
 class Scan : public Ability
 {
 private:
+    static const int ID = 5;
     Scan(int playerID = -1, bool isActive = false, bool isUsed = false);
 
 public:
