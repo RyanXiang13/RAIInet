@@ -25,6 +25,7 @@ public:
     const std::vector<std::unique_ptr<Link>> &getOwnedLinks() const;
     const std::vector<std::unique_ptr<Link>> &getKnownLinks() const;
     const std::vector<std::unique_ptr<Link>> &getDownloadedLinks() const;
+    void setIsTurn(bool b);
     void addAbility(int a);
     void addOwnedLink(std::unique_ptr<Link> l);
     void addKnownLink(std::string s);
