@@ -29,6 +29,7 @@ public:
     void setIsFirewall(int p);
     void setIsTopOrBottomEdge(int p);
     void setLink(std::unique_ptr<Link> l);
+    void transferLinkToPlayer(Player &player); // transfers ownership of the link to the downloadedLinks vector in player
 };
 
 #endif
