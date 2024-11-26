@@ -9,31 +9,33 @@ private:
     int row;
     int col;
     int strength;
+    int moveStrength;
     bool isVirus;
-    bool isOccupied;
-    bool hasAbility;
     int playerID;
-    bool isDownloaded;
+    bool isDownloaded; // always check this first to see if the link is inactive
+    std::vector<int> abilities;
     Link(int r, int c, bool v, bool o, bool h, bool d, int id, bool isD);
 
 public:
-    static std::unique_ptr<Link> create(int r, int c, bool v, bool o, bool h, int id, bool isD);
+    static std::unique_ptr<Link> create(int r, int c, int s, bool v, bool pID, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
     int getRow() const;
     int getCol() const;
     int getStrength() const;
-    bool isVirus() const;
-    bool isOccupied() const;
-    bool hasAbility() const;
+    int getMoveStrength() const;
+    bool getIsVirus() const;
+    bool hasAbility(int abilityID) const;
     int getPlayerID() const;
-    bool isDownloaded() const;
+    bool getIsDownloaded() const;
+    std::string getName() const; // create the name based on isVirus and strength
     void setRow(int r);
     void setCol(int c);
     void setStrength(int s);
-    void setVirus(bool v);
-    void setOccupied(bool o);
-    void setHasAbility(bool h);
+    void addMoveStrength();
+    void setIsVirus(bool v);
     void setPlayerID(int id);
-    void setDownloaded(bool d);
+    void setIsDownloaded(bool d);
+    void addAbility(int abilityID);
+    void removeAbility(int abilityID);
 
     // special action cells functions
     bool isOnFirewall() const;
