@@ -2,8 +2,10 @@
 #define SKIPTURN_H
 #include "ability.h"
 #include <memory>
-#include "player.h"
 #include <vector>
+#include "link.h"
+#include "cell.h"
+#include "player.h"
 
 class SkipTurn : public Ability
 {

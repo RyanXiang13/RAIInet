@@ -10,13 +10,13 @@ bool LinkBoost::use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Ce
     // verify that
     // 1. the player has the linkboost ability
     // 2. the link is not already downloaded
-    if (!l->hasAbility(LinkBoost::ID) || !l->getIsDownloaded())
+    if (!players[curPlayerID]->hasAbility(LinkBoost::ID) || l->getIsDownloaded())
     {
         return false;
     }
-    // boost the link
+    // apply the linkboost on the link
     l->addMoveStrength();                               // adds 1 to the move strength of the link
-    l->addAbility(LinkBoost::ID);                       // add to link's list of abilities
-    players[curPlayerID]->removeAbility(LinkBoost::ID); // remove from player's list of abilities
+    l->addAbility(LinkBoost::ID);                       // add to link's list of abilities (not sure if useful but nice information)
+    players[curPlayerID]->removeAbility(LinkBoost::ID); // remove from player's list of abilities (one)
     return true;
 }

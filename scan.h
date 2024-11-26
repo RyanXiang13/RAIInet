@@ -2,18 +2,16 @@
 #define SCAN_H
 #include "ability.h"
 #include <memory>
-#include "link.h"
 #include <vector>
+#include "link.h"
+#include "cell.h"
+#include "player.h"
 
 class Scan : public Ability
 {
-private:
-    static const int ID = 5;
-    Scan(int playerID = -1, bool isActive = false, bool isUsed = false);
-
 public:
-    static std::unique_ptr<Scan> create(int playerID = -1, bool isActive = false, bool isUsed = false);
-    void use(std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players) override;
+    static const int ID = 5;
+    static bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
 };
 
 #endif

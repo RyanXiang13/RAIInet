@@ -17,7 +17,7 @@ private:
     Link(int r, int c, bool v, bool o, bool h, bool d, int id, bool isD);
 
 public:
-    static std::unique_ptr<Link> create(int r, int c, int s, bool v, bool pID, bool isD, std::vector<int> abilities = std::vector<int>(5, 10));
+    static std::unique_ptr<Link> create(int r, int c, int s, bool v, bool pID, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
     int getRow() const;
     int getCol() const;
     int getStrength() const;

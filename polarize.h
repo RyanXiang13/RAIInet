@@ -1,19 +1,17 @@
 #ifndef POLARIZE_H
 #define POLARIZE_H
 #include "ability.h"
+#include <vector>
 #include <memory>
 #include "link.h"
-#include <vector>
+#include "cell.h"
+#include "player.h"
 
 class Polarize : public Ability
 {
-private:
-    static const int ID = 4;
-    Polarize(int playerID = -1, bool isActive = false, bool isUsed = false);
-
 public:
-    static std::unique_ptr<Polarize> create(int playerID = -1, bool isActive = false, bool isUsed = false);
-    void use(std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players) override;
+    static const int ID = 4;
+    static bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
 };
 
 #endif
