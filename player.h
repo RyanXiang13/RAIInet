@@ -9,7 +9,8 @@
 class Player
 {
 private:
-    Player(int id, bool isTurn, std::vector<int> a, std::vector<std::string> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl);
+    Player(int id, bool isTurn, std::vector<int> a, std::vector<std::string> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl)
+        : playerID(id), isTurn(isTurn), abilities(a), ownedLinks(l), knownLinks(kl), downloadedLinks(std::move(dl)) {}
     int playerID;
     bool isTurn;
     std::vector<int> abilities;                         // stores all counts of abilities, 0 is ignored and 1-8 are the IDs, respectively

@@ -8,7 +8,7 @@
 
 std::unique_ptr<Player> Player::create(int id, bool isTurn, std::vector<int> a, std::vector<std::string> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl)
 {
-    return std::make_unique<Player>(id, isTurn, a, l, kl, dl);
+    return std::make_unique<Player>(id, isTurn, a, l, kl, std::move(dl));
 }
 
 int Player::getPlayerID() const
