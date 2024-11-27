@@ -10,9 +10,9 @@ class TextObserver : public Observer
     const int LENGTH = 8;
     const int WIDTH = 8;
 private:
-    void updateDownloaded(Player& player);
-    void updateAbilityCounter(Player& player);
-    void printOwnedLinks(Player& player);
+    void updateDownloaded(Player& player); // DONE
+    void updateAbilityCounter(Player& player); // DONE
+    void printOwnedLinks(Player& player); // DONE
     void updateKnownLinks(Player& player); // pass in the player that has the current turn
     void updateCellTextDisplay(Player& player);
 

@@ -60,3 +60,11 @@ void TextObserver::printOwnedLinks(Player& player) {
   }
 
 }
+void TextObserver::updateDownloaded(Player& player) {
+  cout << "Downloaded: " << player.getNumOfData() << "D, " 
+    << player.getNumOfVirus() << "V" << endl;
+}
+
+void TextObserver::updateAbilityCounter(Player& player) {
+  cout << "Abilities: " << player.getAbilityCount() << endl;
+}

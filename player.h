@@ -15,12 +15,16 @@ private:
     std::vector<int> abilities;                         // stores all counts of abilities, 0 is ignored and 1-8 are the IDs, respectively
     std::vector<std::string> ownedLinks;                // stores all names of links that the player owns
     std::vector<std::string> knownLinks;                // stores all names of links that the player knows the opponent has
-    std::vector<std::unique_ptr<Link>> downloadedLinks; // stores all link objects that the player has downloaded
+    int dataDownloaded;
+    int virusDownloaded;
+    // std::vector<std::unique_ptr<Link>> downloadedLinks; // stores all link objects that the player has downloaded
 
 public:
     static std::unique_ptr<Player> create(int id, bool isTurn, std::vector<int> a = std::vector<int>(9, 0), std::vector<std::unique_ptr<Link>> l = std::vector<std::unique_ptr<Link>>(), std::vector<std::string> kl = std::vector<std::string>(), std::vector<std::unique_ptr<Link>> dl = std::vector<std::unique_ptr<Link>>());
     int getPlayerID() const;
     bool getIsTurn() const;
+    int getNumOfData() const;
+    int getNumOfVirus() const;
     const std::vector<int> &getAbilities() const;
     const std::vector<std::unique_ptr<Link>> &getOwnedLinks() const;
     const std::vector<std::unique_ptr<Link>> &getKnownLinks() const;
