@@ -37,17 +37,9 @@ void TextObserver::notify(Subject &subject) {
 
 void TextObserver::printOwnedLinks(Player& player) {
   const auto& ownedLinks = player.getOwnedLinks();
-  char start;
   int count = 0;
-  if (player.getPlayerID() == 1) {
-  start = 97;
-  } else {
-  start = 65;
-  }
   for (const auto& link : ownedLinks) {
-    cout << start << ": ";
-    start++;
-    cout << link->getName();
+    cout << link->getId() << ": " << link->getName();
     if (count % 4 == 0) {
       cout << endl;
       continue;

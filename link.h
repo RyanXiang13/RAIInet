@@ -26,6 +26,7 @@ public:
     bool hasAbility(int abilityID) const;
     int getPlayerID() const;
     bool getIsDownloaded() const;
+    char getId() const;
     std::string getName() const; // create the name based on isVirus and strength
     void setRow(int r);
     void setCol(int c);
