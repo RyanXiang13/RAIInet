@@ -7,7 +7,9 @@
 class Subject
 {
     std::vector<std::unique_ptr<Observer>> observers;
-    std::vector<bool> observersUpdate;
+    
+protected:
+    void notifyObservers();
 
 public:
     void attach(std::unique_ptr<Observer> o);
