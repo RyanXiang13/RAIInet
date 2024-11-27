@@ -2,6 +2,8 @@
 #define LINK_H
 #include "player.h"
 #include <memory>
+#include <string>
+#include <vector>
 
 class Link
 {
@@ -14,10 +16,11 @@ private:
     int playerID;
     bool isDownloaded; // always check this first to see if the link is inactive
     std::vector<int> abilities;
-    Link(int r, int c, bool v, bool o, bool h, bool d, int id, bool isD);
+    Link(int r, int c, int s, int ms, bool v, int id, bool isD, std::vector<int> ab)
+        : row(r), col(c), strength(s), moveStrength(ms), isVirus(v), playerID(id), isDownloaded(isD), abilities(ab) {}
 
 public:
-    static std::unique_ptr<Link> create(int r, int c, int s, bool v, bool pID, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
+    static std::unique_ptr<Link> create(int r, int c, int s, int ms, bool v, int id, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
     int getRow() const;
     int getCol() const;
     int getStrength() const;
@@ -30,24 +33,24 @@ public:
     void setRow(int r);
     void setCol(int c);
     void setStrength(int s);
-    void addMoveStrength();
     void setIsVirus(bool v);
     void setPlayerID(int id);
     void setIsDownloaded(bool d);
+    void addMoveStrength();
     void addAbility(int abilityID);
     void removeAbility(int abilityID);
 
     // special action cells functions
-    bool isOnFirewall() const;
-    bool isOnServerPort() const;
-    bool isPastBoardEdge() const;
+    bool isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
+    bool isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
+    bool isPastOpponentBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
 
     // action functions
     void moveLink(char dir);
     bool battleLink(std::unique_ptr<Link> l);
-    void onServerPort();
-    void onFirewall();
-    void onPastBoardEdge();
+    void onServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players);
+    void onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players);
+    void onPastBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players);
 };
 
 #endif
