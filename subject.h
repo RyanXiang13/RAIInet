@@ -14,7 +14,9 @@ protected:
 public:
     void attach(std::unique_ptr<Observer> o);
     void detach(std::unique_ptr<Observer> o);
-    void notifyObservers(); // uses the "push" model
+    void notifyObservers(Subject* game); // uses the "push" model
+    virtual char charAt(int row, int col) = 0;
+    virtual int whosTurn();
     virtual ~Subject() = default;
 };
 

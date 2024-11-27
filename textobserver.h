@@ -6,11 +6,14 @@
 
 class TextObserver : public Observer
 {
-    int top, bottom, left, right;
+    bool twoPlayers;
+    const int LENGTH = 8;
+    const int WIDTH = 8;
 private:
-    void updateDownloadedTextDisplay(int playerID);
-    void updateAbilityCounterTextDisplay(int playerID);
-    void updateKnownLinksTextDisplay(int playerID); // pass in the playerID that has the current turn
+    void updateDownloaded(int playerID);
+    void updateAbilityCounter(int playerID);
+    void printOwnedLinks(int playerID);
+    void updateKnownLinks(int playerID); // pass in the playerID that has the current turn
     void updateCellTextDisplay(std::unique_ptr<Cell> c);
 
 public:
