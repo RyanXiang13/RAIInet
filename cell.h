@@ -13,7 +13,7 @@ private:
     int isServerPort;           // return 1 for p1 and 2 for p2, 0 for not
     int isFirewall;             // return 1 for p1 and 2 for p2, 0 for not
     std::unique_ptr<Link> link; // owns the link while it is on the board (occupies a cell)
-    Cell(int r, int c, bool sp, bool f, std::unique_ptr<Link> l = nullptr)
+    Cell(int r, int c, bool sp = false, bool f = false, std::unique_ptr<Link> l = nullptr)
         : row(r), col(c), isServerPort(sp), isFirewall(f), link(std::move(l)) {}
 
 public:

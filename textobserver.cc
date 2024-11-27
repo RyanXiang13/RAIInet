@@ -1,6 +1,9 @@
 #include <iostream>
 #include "textobserver.h"
 #include "game.h"
+#include "player.h"
+#include "link.h"
+
 using namespace std;
 
 TextObserver::TextObserver(bool twoPlayers) : twoPlayers{twoPlayers} {}
