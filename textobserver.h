@@ -6,15 +6,19 @@
 
 class TextObserver : public Observer
 {
+    bool twoPlayers;
+    const int LENGTH = 8;
+    const int WIDTH = 8;
 private:
-    void updateDownloadedTextDisplay();
-    void updateAbilityCounterTextDisplay();
-    void updateKnownLinksTextDisplay(int playerID); // pass in the playerID that has the current turn
-    void updateCellTextDisplay(std::unique_ptr<Cell> c);
+    void updateDownloaded(Player& player); // DONE
+    void updateAbilityCounter(Player& player); // DONE
+    void printOwnedLinks(Player& player); // DONE
+    void updateKnownLinks(Player& player); // pass in player who's turn it ISN'T // DONE
+    void updateCellTextDisplay(Player& player);
 
 public:
-    TextObserver();
-    void notify(Subject &game) override;
+    TextObserver(bool twoPlayers);
+    void notify(Subject &subject) override;
 };
 
 #endif

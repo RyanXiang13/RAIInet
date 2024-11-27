@@ -13,6 +13,7 @@ private:
     int strength;
     int moveStrength;
     bool isVirus;
+    bool isFound;
     int playerID;
     bool isDownloaded; // always check this first to see if the link is inactive
     std::vector<int> abilities;
@@ -27,8 +28,10 @@ public:
     int getMoveStrength() const;
     bool getIsVirus() const;
     bool hasAbility(int abilityID) const;
+    bool getIsFound() const;
     int getPlayerID() const;
     bool getIsDownloaded() const;
+    char getId() const;
     std::string getName() const; // create the name based on isVirus and strength
     void setRow(int r);
     void setCol(int c);
