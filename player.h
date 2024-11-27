@@ -27,7 +27,7 @@ public:
     int getNumOfVirus() const;
     const std::vector<int> &getAbilities() const;
     const std::vector<std::unique_ptr<Link>> &getOwnedLinks() const;
-    const std::vector<std::unique_ptr<Link>> &getKnownLinks() const;
+    const std::vector<std::unique_ptr<Link>> &getKnownLinks() const; // make size 8, in order from a-h (linkId)
     const std::vector<std::unique_ptr<Link>> &getDownloadedLinks() const;
     void addAbility(int a);
     void addOwnedLink(std::unique_ptr<Link> l);

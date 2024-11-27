@@ -14,7 +14,7 @@ void TextObserver::notify(Subject &subject) {
   updateDownloaded(*playerOne);
   updateAbilityCounter(*playerOne);
   if (game->whosTurn() == 1) printOwnedLinks(*playerOne);
-  else updateKnownLinks(*playerTwo);
+  else updateKnownLinks(*playerOne);
   for (int i = 0; i < WIDTH; i++) {
     cout << "=";
   }
@@ -32,7 +32,7 @@ void TextObserver::notify(Subject &subject) {
   updateDownloaded(*playerTwo);
   updateAbilityCounter(*playerTwo);
   if (game->whosTurn() == 2) printOwnedLinks(*playerTwo);
-  else updateKnownLinks(*playerOne);
+  else updateKnownLinks(*playerTwo);
 }
 
 void TextObserver::printOwnedLinks(Player& player) {
@@ -58,22 +58,20 @@ void TextObserver::updateAbilityCounter(Player& player) {
 }
 
 void TextObserver::updateKnownLinks(Player& player) {
-  const auto& knownLinks = player.getKnownLinks();
-  char start;
-  int count = 0;
-  if (player.getPlayerID() == 1) {
-  start = 65; // player two has upper casse A to start
-  } else {
-  start = 97; // lowercase a to start if player two
-  }
+  const auto& knownLinks = player.getOwnedLinks();
+  int count = 1;
   for (const auto& link : knownLinks) {
-    cout << start << ": ";
-    start++;
-    cout << link->getName();
+    cout << link->getId() << ": ";
+    if (link->getIsFound()) {
+      cout << link->getName();
+    } else {
+      cout << "?";
+    }
     if (count % 4 == 0) {
       cout << endl;
       continue;
     }
     cout << link->getStrength() << " ";
+    count++;
   }
 }

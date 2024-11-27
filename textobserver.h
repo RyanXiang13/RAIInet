@@ -13,7 +13,7 @@ private:
     void updateDownloaded(Player& player); // DONE
     void updateAbilityCounter(Player& player); // DONE
     void printOwnedLinks(Player& player); // DONE
-    void updateKnownLinks(Player& player); // pass in the player that has the current turn
+    void updateKnownLinks(Player& player); // pass in player who's turn it ISN'T // DONE
     void updateCellTextDisplay(Player& player);
 
 public:
