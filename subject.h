@@ -10,7 +10,6 @@ class Observer;
 class Subject {
     
 protected:
-    void notifyObservers();
     std::vector<std::unique_ptr<Observer>> observers;
 
 public:
