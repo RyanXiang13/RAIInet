@@ -5,6 +5,7 @@
 #include "cell.h"
 #include "subject.h"
 #include <memory>
+#include <vector>
 
 class GraphicsObserver : public Observer
 {
@@ -13,6 +14,11 @@ private:
     std::unique_ptr<Xwindow> window;
     int width;
     int height;
+    std::vector<std::vector<char>> previous;
+    
+    void drawFullBoard();
+    void drawCell(int i, int j, int colour, char piece);
+    
     void updateDownloadedDisplay();
     void updateAbilityCounterDisplay();
     void updateKnownLinksDisplay(int playerID);
@@ -22,7 +28,6 @@ public:
     GraphicsObserver(Subject *sub, int width, int height);
     ~GraphicsObserver();
     void notify(Subject &subject) override;
-    static std::unique_ptr<GraphicsObserver> create(Subject* sub, int width, int height);
 };
 
 #endif
