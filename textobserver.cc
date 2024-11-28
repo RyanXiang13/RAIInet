@@ -78,7 +78,7 @@ void TextObserver::updateKnownLinks(Player& player) {
       count++;
       continue;
     }
-    cout << link->getStrength() << " ";
+    cout << " ";
     count++;
   }
 }

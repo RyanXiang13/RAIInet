@@ -188,20 +188,20 @@ bool Link::battleLink( Link* l)
     return this->strength >= l->strength; // initiator wins if their strength is equal as well
 }
 
-void Link::onServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players)
+void Link::onServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // server port owner downloads the link
     this->setIsDownloaded(true);
     board[this->row][this->col]->transferLinkToPlayer(*players[board[this->row][this->col]->getIsServerPort()]); // switch ownership of the link to the server port owner
 }
 
-void Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players)
+void Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // simply call the activate firewall function
     Firewall::activate(*this, *board[this->row][this->col], players);
 }
 
-void Link::onPastBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> players)
+void Link::onPastBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // link owner downloads the link
     this->setIsDownloaded(true);

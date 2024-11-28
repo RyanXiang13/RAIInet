@@ -31,7 +31,7 @@ public:
     void setIsServerPort(int p);
     void setIsFirewall(int p);
     void setLink(Link* l);
-    void transferLinkToPlayer(Player &player); // transfers ownership of the link to the downloadedLinks vector in player
+    //void transferLinkToPlayer(Player &player); // transfers ownership of the link to the downloadedLinks vector in player
 };
 
 #endif

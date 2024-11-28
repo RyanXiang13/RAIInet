@@ -47,7 +47,7 @@ int main() {
     // Display initial state
     game.notifyObservers(&game);
 
-    string command;
+    //string command;
 
     game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     return 0;
