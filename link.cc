@@ -155,7 +155,7 @@ bool Link::isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>
     return false;
 }
 
-bool Link::isPastOpponentBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
+bool Link::isPastOpponentBoardEdge() const
 {
     if (this->playerID == 1) {
         // Player 1 starts at top (row 0), should check bottom edge

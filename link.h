@@ -48,7 +48,7 @@ public:
     // special action cells functions
     bool isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
     bool isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
-    bool isPastOpponentBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const;
+    bool isPastOpponentBoardEdge() const;
 
     // action functions
     void moveLink(char dir);

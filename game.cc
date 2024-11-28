@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <iostream>
 
+
 Game::Game(std::unique_ptr<Player> p1, std::unique_ptr<Player> p2) {
   players.emplace_back(std::move(p1));
   players.emplace_back(std::move(p2));
@@ -74,9 +75,10 @@ bool Game::moveLink(Link* l, char dir) {
     if (l->getIsVirus()) {
       players[l->getPlayerID() - 1]->download(l);
     }
-  } else if (l->isPastOpponentBoardEdge(board)) {
-    l->setIsFound(true);
-    players[l->getPlayerID() - 1]->download(l); // owner downloads
+  } else if (l->isPastOpponentBoardEdge()) {
+    std::cout << "YUP FOUND" << std::endl;
+    //l->setIsFound(true);
+    //players[l->getPlayerID() - 1]->download(l); // owner downloads
   } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID()) {
     l->setRow(curRow);
     l->setCol(curCol);
@@ -94,11 +96,17 @@ bool Game::moveLink(Link* l, char dir) {
   } else {
     board[l->getRow()][l->getCol()]->setLink(l);
   }
+  std::cout << curRow << curCol<< std::endl;
   board[curRow][curCol]->setLink(nullptr);
+  std::cout << "hyaygbgybbgygyb" << std::endl;
   int currentPlayer = l->getPlayerID() - 1;
+  std::cout << "bgygbybggtgtvgt" << std::endl;
   players[currentPlayer]->setTurn(false);
+  std::cout << "1312" << std::endl;
   players[1 - currentPlayer]->setTurn(true); 
+  std::cout << "vfaada" << std::endl;
   notifyObservers(this);
+  std::cout << "adanja" << std::endl;
   return true;
 }
 

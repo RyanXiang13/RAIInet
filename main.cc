@@ -11,7 +11,7 @@ using namespace std;
 int main() {
     //p1 links
     std::vector<std::unique_ptr<Link>> p1Links;
-    p1Links.push_back(Link::create(0, 0, 1, 1, false, 'a', 1, false));
+    p1Links.push_back(Link::create(6, 0, 1, 1, false, 'a', 1, false));
     p1Links.push_back(Link::create(0, 1, 2, 1, false, 'b', 1, false));
     p1Links.push_back(Link::create(0, 2, 3, 1, false, 'c', 1, false));
     p1Links.push_back(Link::create(1, 3, 4, 1, false, 'd', 1, false));
@@ -54,7 +54,7 @@ int main() {
         char dir;
         cin >> id >> dir;
         Link* toMove = game.getLinkFromID(id, game.whosTurn());
-        if (toMove) {
+        if (toMove && !toMove->getIsDownloaded()) {
           game.moveLink(toMove, dir);
         }
 
