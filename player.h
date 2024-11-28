@@ -33,6 +33,7 @@ public:
     const std::vector<std::string> &getKnownLinks() const;
     const std::vector<std::unique_ptr<Link>> &getDownloadedLinks() const;
     void addAbility(int a);
+    void download(Link* l);
     void addOwnedLink(std::unique_ptr<Link> l);
     void addKnownLink(std::string s);
     void addDownloadedLink(std::unique_ptr<Link> l);
