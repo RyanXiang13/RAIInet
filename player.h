@@ -17,17 +17,18 @@ private:
     std::vector<std::string> knownLinks;                // stores all names of links that the player knows the opponent has
     int dataDownloaded;
     int virusDownloaded;
-    // std::vector<std::unique_ptr<Link>> downloadedLinks; // stores all link objects that the player has downloaded
+    std::vector<std::unique_ptr<Link>> downloadedLinks; // stores all link objects that the player has downloaded
 
 public:
     static std::unique_ptr<Player> create(int id, bool isTurn, std::vector<int> a = std::vector<int>(9, 0), std::vector<std::unique_ptr<Link>> l = std::vector<std::unique_ptr<Link>>(), std::vector<std::string> kl = std::vector<std::string>(), std::vector<std::unique_ptr<Link>> dl = std::vector<std::unique_ptr<Link>>());
     int getPlayerID() const;
     bool getIsTurn() const;
+    void setTurn(bool b);
     int getNumOfData() const;
     int getNumOfVirus() const;
     const std::vector<int> &getAbilities() const;
     const std::vector<std::unique_ptr<Link>> &getOwnedLinks() const;
-    const std::vector<std::unique_ptr<Link>> &getKnownLinks() const;
+    const std::vector<std::string> &getKnownLinks() const;
     const std::vector<std::unique_ptr<Link>> &getDownloadedLinks() const;
     void addAbility(int a);
     void addOwnedLink(std::unique_ptr<Link> l);

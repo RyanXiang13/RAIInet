@@ -11,8 +11,8 @@ TextObserver::TextObserver(bool twoPlayers) : twoPlayers{twoPlayers} {}
 void TextObserver::notify(Subject &subject) {
   Game* game = dynamic_cast<Game*>(&subject);
   if (!game) return;
-  std::unique_ptr<Player> playerOne = game->getPlayer(0); //1st player
-  std::unique_ptr<Player> playerTwo = game->getPlayer(1); // 2nd player
+  std::unique_ptr<Player>& playerOne = game->getPlayer(0); //1st player
+  std::unique_ptr<Player>& playerTwo = game->getPlayer(1); // 2nd player
   cout << "Player 1:" << endl;
   updateDownloaded(*playerOne);
   updateAbilityCounter(*playerOne);
