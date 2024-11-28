@@ -17,7 +17,7 @@ public:
     static const int width = 8;
     static const int height = 8;
     Game(std::unique_ptr<Player> p1, std::unique_ptr<Player> p2);
-    void moveLink(Link* l, char dir);
+    bool moveLink(Link* l, char dir);
     int whosTurn() override;
     
     std::unique_ptr<Player>& getPlayer(int index) override;

@@ -144,3 +144,12 @@ int Player::getNumOfVirus() const {
     }
     return count;
 }
+
+void Player::download(Link* l) {
+    l->setIsDownloaded(true);
+    if (l->getIsVirus()) {
+        virusDownloaded++;
+    } else {
+        dataDownloaded++;
+    }
+}

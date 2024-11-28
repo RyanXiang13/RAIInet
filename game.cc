@@ -1,7 +1,6 @@
 #include "game.h"
 #include "player.h"
 #include "cell.h"
-#
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -60,30 +59,38 @@ int Game::whosTurn() {
   return 1; // default to player 1 for testing
 }
 
-void Game::moveLink(Link* l, char dir) {
+bool Game::moveLink(Link* l, char dir) {
   int curRow = l->getRow();
   int curCol = l->getCol();
-  l->moveLink(dir);
-  if (l->getRow() > 7) {
-    l->moveLink('U');
-  } else if (l->getRow() < 0) {
-    l->moveLink('D');
-  } else if (l->getCol() > 7) {
-    l->moveLink('L');
-  } else if (l->getCol() < 0) {
-    l->moveLink('R');
-  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID()) {
-    // move back to previous pos
-  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID()) {
-    /* CONFLICT RESOLUTION
-    if(l->battleLink(board[l->getRow()][l->getCol()]->getLink())) {
-      players[l->getPlayerID() - 1]->addDownloadedLink(board[l->getRow()][l->getCol()]->getLink());
-      board[l->getRow()][l->getCol()]->setLink(l);
-    }
-    */
-  } else {
-    board[curRow][curCol]->setLink(nullptr);
-    board[l->getRow()][l->getCol()]->setLink(l);
-    notifyObservers(this);
+  /*
+  if (!l->moveLink(dir)){
+    return false;
   }
+  */
+  if (l->isOnOpponentServerPort(board)) {
+    l->onServerPort(board, players);
+  } else if (l->isOnOpponentFirewall(board)) {
+    l->onFirewall(board, players);
+  } else if (l->isPastOpponentBoardEdge(board)) {
+    l->onPastBoardEdge(board, players);
+  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID()) {
+    l->setRow(curRow);
+    l->setCol(curCol);
+    return false;
+  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID()) {
+    // CONFLICT RESOLUTION
+    if (l->battleLink(board[l->getRow()][l->getCol()]->getLink())) {
+      players[l->getPlayerID() - 1]->download(board[l->getRow()][l->getCol()]->getLink());
+      board[l->getRow()][l->getCol()]->setLink(l);
+    } else {
+      players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
+    }
+  } else {
+    board[l->getRow()][l->getCol()]->setLink(l);
+  }
+  board[curRow][curCol]->setLink(nullptr);
+  notifyObservers(this);
+  players[0]->setTurn(!players[0]->getIsTurn());
+  players[1]->setTurn(!players[1]->getIsTurn());
+
 }
