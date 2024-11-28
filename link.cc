@@ -183,7 +183,7 @@ void Link::moveLink(char dir)
     }
 }
 
-bool Link::battleLink(std::unique_ptr<Link> l)
+bool Link::battleLink( Link* l)
 {                                         // returns true if the initiating player's link wins the battle
     return this->strength >= l->strength; // initiator wins if their strength is equal as well
 }

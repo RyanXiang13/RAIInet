@@ -29,7 +29,7 @@ int Cell::getIsFirewall() const
     return isFirewall;
 }
 
-const Link* Cell::getLink() const
+Link* Cell::getLink() const
 {
     return link;
 }

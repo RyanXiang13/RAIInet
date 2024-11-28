@@ -22,14 +22,14 @@ int main() {
 
     // p2 links
     std::vector<std::unique_ptr<Link>> p2Links;
-    p2Links.push_back(Link::create(7, 0, 1, 1, false, 'A', 1, false));
-    p2Links.push_back(Link::create(7, 1, 2, 1, false, 'B', 1, false));
-    p2Links.push_back(Link::create(7, 2, 3, 1, false, 'C', 1, false));
-    p2Links.push_back(Link::create(6, 3, 4, 1, false, 'D', 1, false));
-    p2Links.push_back(Link::create(6, 4, 1, 1, true, 'E', 1, false));
-    p2Links.push_back(Link::create(7, 5, 2, 1, true, 'F', 1, false));
-    p2Links.push_back(Link::create(7, 6, 3, 1, true, 'G', 1, false));
-    p2Links.push_back(Link::create(7, 7, 4, 1, true, 'H', 1, false));
+    p2Links.push_back(Link::create(7, 0, 1, 1, false, 'A', 2, false));
+    p2Links.push_back(Link::create(7, 1, 2, 1, false, 'B', 2, false));
+    p2Links.push_back(Link::create(7, 2, 3, 1, false, 'C', 2, false));
+    p2Links.push_back(Link::create(6, 3, 4, 1, false, 'D', 2, false));
+    p2Links.push_back(Link::create(6, 4, 1, 1, true, 'E', 2, false));
+    p2Links.push_back(Link::create(7, 5, 2, 1, true, 'F', 2, false));
+    p2Links.push_back(Link::create(7, 6, 3, 1, true, 'G', 2, false));
+    p2Links.push_back(Link::create(7, 7, 4, 1, true, 'H', 2, false));
     
 
     // Create players
@@ -47,5 +47,6 @@ int main() {
     // Display initial state
     game.notifyObservers(&game);
 
+    game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     return 0;
 }

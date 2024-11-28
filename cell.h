@@ -27,7 +27,7 @@ public:
     int getIsFirewall() const;
     bool isValid() const; // check the coordinates
     bool isEmpty() const; // check there's no server port, no firewall, and no link
-    const Link* getLink() const;
+    Link* getLink() const;
     void setIsServerPort(int p);
     void setIsFirewall(int p);
     void setLink(Link* l);
