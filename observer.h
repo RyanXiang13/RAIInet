@@ -2,6 +2,7 @@
 #define _OBSERVER_H_
 #include "subject.h"
 
+class Subject;
 class Observer
 {
 public:

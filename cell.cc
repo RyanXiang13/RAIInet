@@ -4,9 +4,9 @@
 #include "link.h"
 #include "player.h"
 
-std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, std::unique_ptr<Link> l)
+std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, Link* l)
 {
-    return std::make_unique<Cell>(r, c, sp, f, std::move(l));
+    return std::unique_ptr<Cell>(new Cell(r, c, sp, f, l));
 }
 
 int Cell::getRow() const
@@ -29,7 +29,7 @@ int Cell::getIsFirewall() const
     return isFirewall;
 }
 
-const std::unique_ptr<Link> &Cell::getLink() const
+const Link* Cell::getLink() const
 {
     return link;
 }
@@ -44,9 +44,9 @@ void Cell::setIsFirewall(int p)
     this->isFirewall = p;
 }
 
-void Cell::setLink(std::unique_ptr<Link> l)
+void Cell::setLink(Link* l)
 {
-    this->link = std::move(l);
+    this->link = l;
 }
 
 bool Cell::isValid() const
@@ -61,6 +61,6 @@ bool Cell::isEmpty() const
 
 void Cell::transferLinkToPlayer(Player &player)
 {
-    player.addDownloadedLink(std::move(this->link)); // transfer ownership of link to player once its been downloaded
+    player.addDownloadedLink(std::unique_ptr<Link>(this->link)); // transfer ownership of link to player once its been downloaded
     this->link = nullptr;                            // already done in previous step but just for certain
 }

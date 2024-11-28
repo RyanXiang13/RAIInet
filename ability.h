@@ -5,6 +5,9 @@
 #include "link.h"
 #include "cell.h"
 #include "player.h"
+class Link;
+class Cell;
+class Player;
 
 class Ability // Pure static utility class, no instantiation
 {

@@ -6,9 +6,8 @@
 #include "link.h"
 #include "ability.h"
 
-std::unique_ptr<Player> Player::create(int id, bool isTurn, std::vector<int> a, std::vector<std::string> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl)
-{
-    return std::make_unique<Player>(id, isTurn, a, l, kl, dl);
+std::unique_ptr<Player> Player::create(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_ptr<Link>> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl) {
+    return std::unique_ptr<Player>(new Player(id, isTurn, a, std::move(l), kl, std::move(dl))); // Use std::move for unique_ptr
 }
 
 int Player::getPlayerID() const
@@ -26,7 +25,7 @@ const std::vector<int> &Player::getAbilities() const
     return abilities;
 }
 
-const std::vector<std::string> &Player::getOwnedLinks() const
+const std::vector<std::unique_ptr<Link>> &Player::getOwnedLinks() const
 {
     return ownedLinks;
 }
@@ -41,7 +40,7 @@ const std::vector<std::unique_ptr<Link>> &Player::getDownloadedLinks() const
     return downloadedLinks;
 }
 
-void Player::setIsTurn(bool b)
+void Player::setTurn(bool b)
 {
     this->isTurn = b; // true for it is the current player's turn, note that at any given time the two player's isTurn values should be opposite to each other
 }
@@ -53,7 +52,7 @@ void Player::addAbility(int a)
 
 void Player::addOwnedLink(std::unique_ptr<Link> l)
 {
-    this->ownedLinks.push_back(l->getName()); // add the name of the link as we only want one owner for unique pointers (and that is downloadedLinks)
+    this->ownedLinks.push_back(std::move(l)); // add the name of the link as we only want one owner for unique pointers (and that is downloadedLinks)
 }
 
 void Player::addKnownLink(std::string s)
@@ -71,6 +70,7 @@ void Player::removeAbility(int a)
     this->abilities[a]--; // remove one count of the ability from the corresponding index
 }
 
+/*
 void Player::removeOwnedLink(std::string s)
 {
     // this may or may not be needed when one of the players loses their link
@@ -80,6 +80,7 @@ void Player::removeOwnedLink(std::string s)
         this->ownedLinks.erase(it); // simply delete the link name from the vector
     }
 }
+*/
 
 void Player::removeKnownLink(std::string s)
 {
@@ -114,4 +115,32 @@ int Player::getAbilityCount() const
         sum += i;
     }
     return sum;
+}
+
+// Constructor implementation
+Player::Player(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_ptr<Link>> l, 
+              std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl) {
+    playerID = id;
+    this->isTurn = isTurn;
+    abilities = a;
+    ownedLinks = std::move(l);
+    knownLinks = kl;
+    downloadedLinks = std::move(dl);
+}
+
+// Missing methods
+int Player::getNumOfData() const {
+    int count = 0;
+    for (const auto& link : downloadedLinks) {
+        if (!link->getIsVirus()) count++;
+    }
+    return count;
+}
+
+int Player::getNumOfVirus() const {
+    int count = 0;
+    for (const auto& link : downloadedLinks) {
+        if (link->getIsVirus()) count++;
+    }
+    return count;
 }

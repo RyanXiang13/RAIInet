@@ -11,8 +11,8 @@ TextObserver::TextObserver(bool twoPlayers) : twoPlayers{twoPlayers} {}
 void TextObserver::notify(Subject &subject) {
   Game* game = dynamic_cast<Game*>(&subject);
   if (!game) return;
-  std::unique_ptr<Player> playerOne = game->getPlayer(0); //1st player
-  std::unique_ptr<Player> playerTwo = game->getPlayer(1); // 2nd player
+  std::unique_ptr<Player>& playerOne = game->getPlayer(0); //1st player
+  std::unique_ptr<Player>& playerTwo = game->getPlayer(1); // 2nd player
   cout << "Player 1:" << endl;
   updateDownloaded(*playerOne);
   updateAbilityCounter(*playerOne);
@@ -42,7 +42,7 @@ void TextObserver::printOwnedLinks(Player& player) {
   const auto& ownedLinks = player.getOwnedLinks();
   int count = 0;
   for (const auto& link : ownedLinks) {
-    cout << link->getId() << ": " << link->getName();
+    cout << link->getID() << ": " << link->getName();
     if (count % 4 == 0) {
       cout << endl;
       continue;
@@ -64,7 +64,7 @@ void TextObserver::updateKnownLinks(Player& player) {
   const auto& knownLinks = player.getOwnedLinks();
   int count = 1;
   for (const auto& link : knownLinks) {
-    cout << link->getId() << ": ";
+    cout << link->getID() << ": ";
     if (link->getIsFound()) {
       cout << link->getName();
     } else {

@@ -6,9 +6,25 @@
 #include "player.h"
 #include "firewall.h"
 
-std::unique_ptr<Link> Link::create(int r, int c, int s, int ms, bool v, int id, bool isD, std::vector<int> abilities)
+Link::Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities) {
+    row = r;
+    col = c;
+    strength = s;
+    moveStrength = ms;
+    isVirus = v;
+    letterID = lid;
+    playerID = id;
+    isDownloaded = isD;
+    this->abilities = abilities;
+}
+
+bool Link::getIsFound() const {
+    return isFound; 
+}
+
+std::unique_ptr<Link> Link::create(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities)
 {
-    return std::make_unique<Link>(r, c, s, ms, v, id, isD, abilities);
+    return std::unique_ptr<Link>(new Link(r, c, s, ms, v, lid, id, isD, abilities));
 }
 
 int Link::getRow() const
@@ -44,6 +60,10 @@ int Link::getPlayerID() const
 bool Link::getIsDownloaded() const
 {
     return isDownloaded;
+}
+
+char Link::getID() const {
+    return letterID;
 }
 
 std::string Link::getName() const
