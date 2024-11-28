@@ -4,9 +4,9 @@
 #include "link.h"
 #include "player.h"
 
-std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, Link* l)
+std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, bool iu, Link* l)
 {
-    return std::unique_ptr<Cell>(new Cell(r, c, sp, f, l));
+    return std::unique_ptr<Cell>(new Cell(r, c, sp, f, iu, l));
 }
 
 int Cell::getRow() const
@@ -27,6 +27,16 @@ int Cell::getIsServerPort() const
 int Cell::getIsFirewall() const
 {
     return isFirewall;
+}
+
+bool Cell::getIsUpdated() const
+{
+    return isUpdated;
+}
+
+void Cell::setIsUpdated(bool b)
+{
+    this->isUpdated = b;
 }
 
 const Link* Cell::getLink() const
@@ -51,7 +61,7 @@ void Cell::setLink(Link* l)
 
 bool Cell::isValid() const
 {
-    return this->row >= 0 && this->row < Game::height && this->col >= 0 && this->col < Game::width;
+    return this->row >= 0 && this->row < Game::height && this->col >= 0 && this->col < Game::width; 
 }
 
 bool Cell::isEmpty() const

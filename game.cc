@@ -3,6 +3,7 @@
 #include "cell.h"
 #include <vector>
 #include <memory>
+#include <algorithm>
 
 Game::Game(std::unique_ptr<Player> p1, std::unique_ptr<Player> p2) {
   players.emplace_back(std::move(p1));
@@ -31,6 +32,18 @@ Game::Game(std::unique_ptr<Player> p1, std::unique_ptr<Player> p2) {
 
 }
 
+void moveLink(Link& l, char dir) {
+  if (dir == 'U') {
+    
+  } else if (dir == 'D') {
+    
+  } else if (dir == 'L') {
+    
+  } else if (dir == 'R') {
+    
+  }
+}
+
 std::unique_ptr<Player>& Game::getPlayer(int index) {
   return players[index - 1];
 }
@@ -57,3 +70,13 @@ int Game::whosTurn() {
     }
     return 1; // default to player 1 for testing
 }
+
+/*
+void Game::setUpdates(bool downloadedLinks, bool abilityCounter, bool knownLinks, bool cells) {
+  for (int row = 0; row < height; ++row) {
+    for (int col = 0; col < width; ++col) {
+      //board[row][col]->setIsUpdated(cells);
+    }
+  }
+}
+*/

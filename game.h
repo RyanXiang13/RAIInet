@@ -12,7 +12,7 @@ private:
     std::vector<std::unique_ptr<Player>> players;
     std::vector<std::vector<std::unique_ptr<Cell>>> board;
     std::vector<Link> links;
-
+    std::vector<bool> updated;
 public:
     static const int width = 8;
     static const int height = 8;
@@ -23,7 +23,7 @@ public:
     char charAt(int i, int j) override; // should return "." if nothing in cell, and link char otherwise
     void initBoard();
     void initLinks();
-    void setUpdates(bool downloadedLinks, bool abilityCounter, bool knownLinks, bool cells); // set the text/graphical displays that need to be updated
+    //void setUpdates(bool downloadedLinks, bool abilityCounter, bool knownLinks, bool cells); // set the text/graphical displays that need to be updated
 };
 
 #endif
