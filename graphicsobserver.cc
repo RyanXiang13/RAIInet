@@ -21,7 +21,7 @@ void GraphicsObserver::notify(Subject &subject) {
     int squareHeight = height / boardSize;    
     for (int i = 0; i < boardSize; ++i) {
         for (int j = 0; j < boardSize; ++j) {
-            int colour = ((i + j) % 2 == 0) ? Xwindow::White : Xwindow::Black;
+            int colour = ((i + j) % 2 == 0) ? Xwindow::LightGray : Xwindow::DarkGray;
             int x = j * squareWidth;
             int y = i * squareHeight;
             
