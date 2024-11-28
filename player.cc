@@ -6,9 +6,8 @@
 #include "link.h"
 #include "ability.h"
 
-std::unique_ptr<Player> Player::create(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_ptr<Link>> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl)
-{
-    return std::make_unique<Player>(id, isTurn, a, l, kl, dl);
+std::unique_ptr<Player> Player::create(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_ptr<Link>> l, std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl) {
+    return std::unique_ptr<Player>(new Player(id, isTurn, a, std::move(l), kl, std::move(dl))); // Use std::move for unique_ptr
 }
 
 int Player::getPlayerID() const
@@ -53,7 +52,7 @@ void Player::addAbility(int a)
 
 void Player::addOwnedLink(std::unique_ptr<Link> l)
 {
-    this->ownedLinks.push_back(l); // add the name of the link as we only want one owner for unique pointers (and that is downloadedLinks)
+    this->ownedLinks.push_back(std::move(l)); // add the name of the link as we only want one owner for unique pointers (and that is downloadedLinks)
 }
 
 void Player::addKnownLink(std::string s)

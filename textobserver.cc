@@ -42,7 +42,7 @@ void TextObserver::printOwnedLinks(Player& player) {
   const auto& ownedLinks = player.getOwnedLinks();
   int count = 0;
   for (const auto& link : ownedLinks) {
-    cout << link->getId() << ": " << link->getName();
+    cout << link->getID() << ": " << link->getName();
     if (count % 4 == 0) {
       cout << endl;
       continue;
@@ -64,7 +64,7 @@ void TextObserver::updateKnownLinks(Player& player) {
   const auto& knownLinks = player.getOwnedLinks();
   int count = 1;
   for (const auto& link : knownLinks) {
-    cout << link->getId() << ": ";
+    cout << link->getID() << ": ";
     if (link->getIsFound()) {
       cout << link->getName();
     } else {

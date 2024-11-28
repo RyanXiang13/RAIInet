@@ -4,6 +4,9 @@
 #include "link.h"
 #include "player.h"
 
+class Link;
+class Player;
+
 class Cell
 {
 private:

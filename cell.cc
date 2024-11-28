@@ -6,7 +6,7 @@
 
 std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, Link* l)
 {
-    return std::make_unique<Cell>(r, c, sp, f, l);
+    return std::unique_ptr<Cell>(new Cell(r, c, sp, f, l));
 }
 
 int Cell::getRow() const

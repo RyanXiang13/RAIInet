@@ -1,6 +1,7 @@
 #ifndef LINK_H
 #define LINK_H
 #include "player.h"
+#include "cell.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -15,13 +16,13 @@ private:
     bool isVirus;
     bool isFound;
     int playerID;
+    char letterID;
     bool isDownloaded; // always check this first to see if the link is inactive
     std::vector<int> abilities;
-    Link(int r, int c, int s, int ms, bool v, int id, bool isD, std::vector<int> ab)
-        : row(r), col(c), strength(s), moveStrength(ms), isVirus(v), playerID(id), isDownloaded(isD), abilities(ab) {}
 
 public:
-    static std::unique_ptr<Link> create(int r, int c, int s, int ms, bool v, int id, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
+    Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> ab);
+    static std::unique_ptr<Link> create(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities = std::vector<int>(9, 0));
     int getRow() const;
     int getCol() const;
     int getStrength() const;
@@ -31,7 +32,7 @@ public:
     bool getIsFound() const;
     int getPlayerID() const;
     bool getIsDownloaded() const;
-    char getId() const;
+    char getID() const;
     std::string getName() const; // create the name based on isVirus and strength
     void setRow(int r);
     void setCol(int c);

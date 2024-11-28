@@ -4,6 +4,9 @@
 #include <memory>
 #include "observer.h"
 
+class Player;
+class Observer;
+
 class Subject
 {
     std::vector<std::unique_ptr<Observer>> observers;
