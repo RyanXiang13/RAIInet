@@ -6,7 +6,8 @@
 #include "player.h"
 #include "firewall.h"
 
-Link::Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities) {
+Link::Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities)
+{
     row = r;
     col = c;
     strength = s;
@@ -18,8 +19,9 @@ Link::Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std:
     this->abilities = abilities;
 }
 
-bool Link::getIsFound() const {
-    return isFound; 
+bool Link::getIsFound() const
+{
+    return isFound;
 }
 
 std::unique_ptr<Link> Link::create(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities)
@@ -62,7 +64,8 @@ bool Link::getIsDownloaded() const
     return isDownloaded;
 }
 
-char Link::getID() const {
+char Link::getID() const
+{
     return letterID;
 }
 
@@ -106,7 +109,8 @@ void Link::setPlayerID(int id)
     this->playerID = id;
 }
 
-void Link::setIsFound(bool f) {
+void Link::setIsFound(bool f)
+{
     isFound = f;
 }
 
@@ -157,10 +161,13 @@ bool Link::isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>
 
 bool Link::isPastOpponentBoardEdge() const
 {
-    if (this->playerID == 1) {
+    if (this->playerID == 1)
+    {
         // Player 1 starts at top (row 0), should check bottom edge
         return this->row >= Game::height;
-    } else {
+    }
+    else
+    {
         // Player 2 starts at bottom (row 7), should check top edge
         return this->row < 0;
     }
@@ -168,26 +175,47 @@ bool Link::isPastOpponentBoardEdge() const
 
 void Link::moveLink(char dir)
 {
-    // note this function simply moves it, validaton regarding the move is done in the game class
+    int newRow = row;
+    int newCol = col;
+
+    // calculate new position first without modifying current position
     if (dir == 'U')
     {
-        this->row -= this->moveStrength;
+        newRow -= moveStrength;
     }
     else if (dir == 'D')
     {
-        this->row += this->moveStrength;
+        newRow += moveStrength;
     }
     else if (dir == 'L')
     {
-        this->col -= this->moveStrength;
+        newCol -= moveStrength;
     }
     else if (dir == 'R')
     {
-        this->col += this->moveStrength;
+        newCol += moveStrength;
     }
+
+    // check if move would be off the sides of the board
+    if (newCol < 0 || newCol >= Game::width)
+    {
+        return;
+    }
+
+    // for player 1 (top), can't move up past row 0
+    // for player 2 (bottom), can't move down past row 7
+    if ((playerID == 1 && newRow < 0) ||
+        (playerID == 2 && newRow >= Game::height))
+    {
+        return;
+    }
+
+    // valid move, update position
+    row = newRow;
+    col = newCol;
 }
 
-bool Link::battleLink( Link* l)
+bool Link::battleLink(Link *l)
 {                                         // returns true if the initiating player's link wins the battle
     return this->strength >= l->strength; // initiator wins if their strength is equal as well
 }
@@ -197,4 +225,3 @@ bool Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, st
     // simply call the activate firewall function
     return Firewall::activate(*this, *board[this->row][this->col], players);
 }
-
