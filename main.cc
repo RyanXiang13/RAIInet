@@ -13,6 +13,7 @@ int main() {
     p1Links.push_back(Link::create(0, 0, 1, 1, false, 'a', 1, false));
     p1Links.push_back(Link::create(0, 1, 2, 1, true, 'b', 1, false));
     cout << p1Links[0]->getCol();
+    /*
     // p2 links
     std::vector<std::unique_ptr<Link>> p2Links;
     p2Links.push_back(Link::create(7, 0, 1, 1, false, 'y', 2, false));
@@ -31,6 +32,7 @@ int main() {
     
     // Display initial state
     game->notifyObservers(game.get());
+    */
     
     return 0;
 }

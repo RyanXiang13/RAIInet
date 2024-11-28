@@ -49,3 +49,11 @@ char Game::charAt(int i, int j) {
   }
 }
 
+int Game::whosTurn() {
+    for (size_t i = 0; i < players.size(); ++i) {
+        if (players[i]->getIsTurn()) {
+            return i + 1;
+        }
+    }
+    return 1; // default to player 1 for testing
+}

@@ -6,6 +6,8 @@
 #include "link.h"
 #include "ability.h"
 
+class Link;
+
 class Player
 {
 private:

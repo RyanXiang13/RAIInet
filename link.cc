@@ -6,6 +6,22 @@
 #include "player.h"
 #include "firewall.h"
 
+Link::Link(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities) {
+    row = r;
+    col = c;
+    strength = s;
+    moveStrength = ms;
+    isVirus = v;
+    letterID = lid;
+    playerID = id;
+    isDownloaded = isD;
+    this->abilities = abilities;
+}
+
+bool Link::getIsFound() const {
+    return isFound; 
+}
+
 std::unique_ptr<Link> Link::create(int r, int c, int s, int ms, bool v, char lid, int id, bool isD, std::vector<int> abilities)
 {
     return std::unique_ptr<Link>(new Link(r, c, s, ms, v, lid, id, isD, abilities));

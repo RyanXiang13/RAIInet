@@ -19,9 +19,9 @@ public:
     void detach(std::unique_ptr<Observer> o);
     void notifyObservers(Subject* game); // uses the "push" model
     virtual char charAt(int row, int col) = 0;
-    virtual int whosTurn();
-    virtual std::unique_ptr<Player> getPlayer();
-    virtual ~Subject() = default;
+    virtual int whosTurn() = 0;
+    virtual std::unique_ptr<Player>& getPlayer(int index) = 0;
+    virtual ~Subject() = default;    
 
 };
 

@@ -116,3 +116,31 @@ int Player::getAbilityCount() const
     }
     return sum;
 }
+
+// Constructor implementation
+Player::Player(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_ptr<Link>> l, 
+              std::vector<std::string> kl, std::vector<std::unique_ptr<Link>> dl) {
+    playerID = id;
+    this->isTurn = isTurn;
+    abilities = a;
+    ownedLinks = std::move(l);
+    knownLinks = kl;
+    downloadedLinks = std::move(dl);
+}
+
+// Missing methods
+int Player::getNumOfData() const {
+    int count = 0;
+    for (const auto& link : downloadedLinks) {
+        if (!link->getIsVirus()) count++;
+    }
+    return count;
+}
+
+int Player::getNumOfVirus() const {
+    int count = 0;
+    for (const auto& link : downloadedLinks) {
+        if (link->getIsVirus()) count++;
+    }
+    return count;
+}
