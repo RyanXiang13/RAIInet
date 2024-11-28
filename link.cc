@@ -138,7 +138,7 @@ bool Link::hasAbility(int abilityID) const
 bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
     // check if the cell the link is on has an opponent's firewall
-    if (board[this->row][this->col]->getIsFirewall() != this->playerID)
+    if (board[this->row][this->col]->getIsServerPort() != 0 && board[this->row][this->col]->getIsFirewall() != this->playerID)
     { // must be on the opposite player's firewall to mean anything
         return true;
     }

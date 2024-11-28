@@ -130,19 +130,11 @@ Player::Player(int id, bool isTurn, std::vector<int> a, std::vector<std::unique_
 
 // Missing methods
 int Player::getNumOfData() const {
-    int count = 0;
-    for (const auto& link : downloadedLinks) {
-        if (!link->getIsVirus()) count++;
-    }
-    return count;
+    return dataDownloaded;
 }
 
 int Player::getNumOfVirus() const {
-    int count = 0;
-    for (const auto& link : downloadedLinks) {
-        if (link->getIsVirus()) count++;
-    }
-    return count;
+    return virusDownloaded;
 }
 
 void Player::download(Link* l) {

@@ -51,12 +51,9 @@ char Game::charAt(int i, int j) {
 }
 
 int Game::whosTurn() {
-  for (size_t i = 0; i < players.size(); ++i) {
-    if (players[i]->getIsTurn()) {
-      return i + 1;
-    }
-  }
-  return 1; // default to player 1 for testing
+  if (players[0]->getIsTurn()) return 1;
+  if (players[1]->getIsTurn()) return 2;
+  return 1;
 }
 
 bool Game::moveLink(Link* l, char dir) {
@@ -71,7 +68,7 @@ bool Game::moveLink(Link* l, char dir) {
   if (l->isOnOpponentServerPort(board)) {
     l->setIsFound(true);
     players[!(l->getPlayerID() - 1)]->download(l); // opponent downloads
-  } /*else if (l->isOnOpponentFirewall(board)) {
+  } else if (l->isOnOpponentFirewall(board)) {
     l->setIsFound(true);
     if (l->getIsVirus()) {
       players[l->getPlayerID() - 1]->download(l);
@@ -93,13 +90,14 @@ bool Game::moveLink(Link* l, char dir) {
     } else {
       players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
     }
-  } */else {
+  } else {
     board[l->getRow()][l->getCol()]->setLink(l);
   }
   board[curRow][curCol]->setLink(nullptr);
+  int currentPlayer = l->getPlayerID() - 1;
+  players[currentPlayer]->setTurn(false);
+  players[1 - currentPlayer]->setTurn(true); 
   notifyObservers(this);
-  players[0]->setTurn(!players[0]->getIsTurn());
-  players[1]->setTurn(!players[1]->getIsTurn());
   return true;
 }
 
