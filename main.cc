@@ -46,7 +46,7 @@ int main() {
     
     // Display initial state
     game.notifyObservers(&game);
-
+    //game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     string command;
 
     while (cin >> command) {
@@ -54,16 +54,21 @@ int main() {
         char id;
         char dir;
         cin >> id >> dir;
-        
+        Link* toMove = game.getLinkFromID(id, game.whosTurn());
+        if (toMove) {
+          game.moveLink(toMove, dir);
+        }
+
       } else if (command == "abilities") {
-
+        continue;
       } else if (command == "ability") {
-        
+        continue;
       } else if (command == "board") {
-        
-      } // add rest of commands
+        continue;
+      } else if (command == "quit") {
+        break;
+      }
+      // add rest of commands
     }
-
-    game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     return 0;
 }

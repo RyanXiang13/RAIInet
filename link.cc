@@ -148,7 +148,7 @@ bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> 
 bool Link::isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
     // check if the cell the link is on has one of the opposing player's server ports
-    if (board[this->row][this->col]->getIsServerPort() != this->playerID)
+    if (board[this->row][this->col]->getIsServerPort() != 0 && board[this->row][this->col]->getIsServerPort() != this->playerID)
     { // must be on the opposite player's server port to mean anything
         return true;
     }

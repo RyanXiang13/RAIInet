@@ -67,10 +67,11 @@ bool Game::moveLink(Link* l, char dir) {
     return false;
   }
   */
+  l->moveLink(dir);
   if (l->isOnOpponentServerPort(board)) {
     l->setIsFound(true);
     players[!(l->getPlayerID() - 1)]->download(l); // opponent downloads
-  } else if (l->isOnOpponentFirewall(board)) {
+  } /*else if (l->isOnOpponentFirewall(board)) {
     l->setIsFound(true);
     if (l->getIsVirus()) {
       players[l->getPlayerID() - 1]->download(l);
@@ -92,7 +93,7 @@ bool Game::moveLink(Link* l, char dir) {
     } else {
       players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
     }
-  } else {
+  } */else {
     board[l->getRow()][l->getCol()]->setLink(l);
   }
   board[curRow][curCol]->setLink(nullptr);
@@ -100,4 +101,13 @@ bool Game::moveLink(Link* l, char dir) {
   players[0]->setTurn(!players[0]->getIsTurn());
   players[1]->setTurn(!players[1]->getIsTurn());
   return true;
+}
+
+Link* Game::getLinkFromID(char id, int player) {
+
+  const auto& pLinks = players[player - 1]->getOwnedLinks();
+  for (const auto& link : pLinks) {
+    if (link->getID() == id) return link.get();
+  }
+  return nullptr;
 }
