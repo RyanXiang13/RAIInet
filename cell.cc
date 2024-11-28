@@ -68,10 +68,9 @@ bool Cell::isEmpty() const
 {
     return !this->isServerPort && !this->isFirewall && !this->link; // not a server port, not a firewall, and no link
 }
-/*
+
 void Cell::transferLinkToPlayer(Player &player)
 {
     player.addDownloadedLink(std::unique_ptr<Link>(this->link)); // transfer ownership of link to player once its been downloaded
     this->link = nullptr;                            // already done in previous step but just for certain
 }
-*/

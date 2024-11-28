@@ -9,17 +9,20 @@
 class GraphicsObserver : public Observer
 {
 private:
+    Subject* subject;
     std::unique_ptr<Xwindow> window;
     int width;
     int height;
     void updateDownloadedDisplay();
     void updateAbilityCounterDisplay();
-    void updateKnownLinksDisplay(int playerID); // pass in the playerID that has the current turn
+    void updateKnownLinksDisplay(int playerID);
     void updateCellDisplay(std::unique_ptr<Cell> c);
 
 public:
-    GraphicsObserver(int width, int height);
-    void notify(Subject &game) override;
+    GraphicsObserver(Subject *sub, int width, int height);
+    ~GraphicsObserver();
+    void notify(Subject &subject) override;
+    static std::unique_ptr<GraphicsObserver> create(Subject* sub, int width, int height);
 };
 
 #endif

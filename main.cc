@@ -5,6 +5,7 @@
 #include "player.h"
 #include "link.h"
 #include "textobserver.h"
+#include "graphicsobserver.h"
 using namespace std;
 
 int main() {
@@ -40,15 +41,15 @@ int main() {
     // Create game
     Game game{std::move(player1), std::move(player2)};
   
-    // Create and attach observer
     auto observer = std::make_unique<TextObserver>(true);
     game.attach(std::move(observer));
     
-    // Display initial state
+    auto graphicsObs = std::make_unique<GraphicsObserver>(&game, 400, 400);
+    game.attach(std::move(graphicsObs));
     game.notifyObservers(&game);
 
-    //string command;
+    std::cout << "Press any key to exit..." << std::endl;
+    std::cin.get();
 
-    game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     return 0;
 }
