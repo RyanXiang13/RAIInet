@@ -38,6 +38,7 @@ public:
     void setCol(int c);
     void setStrength(int s);
     void setIsVirus(bool v);
+    void setIsFound(bool f);
     void setPlayerID(int id);
     void setIsDownloaded(bool d);
     void addMoveStrength();
@@ -52,9 +53,7 @@ public:
     // action functions
     void moveLink(char dir);
     bool battleLink(Link* l);
-    void onServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players);
-    void onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players);
-    void onPastBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players);
+    bool onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players);
 };
 
 #endif

@@ -47,7 +47,22 @@ int main() {
     // Display initial state
     game.notifyObservers(&game);
 
-    //string command;
+    string command;
+
+    while (cin >> command) {
+      if (command == "move") {
+        char id;
+        char dir;
+        cin >> id >> dir;
+        
+      } else if (command == "abilities") {
+
+      } else if (command == "ability") {
+        
+      } else if (command == "board") {
+        
+      } // add rest of commands
+    }
 
     game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
     return 0;

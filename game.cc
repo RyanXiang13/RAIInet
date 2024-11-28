@@ -68,17 +68,24 @@ bool Game::moveLink(Link* l, char dir) {
   }
   */
   if (l->isOnOpponentServerPort(board)) {
-    l->onServerPort(board, players);
+    l->setIsFound(true);
+    players[!(l->getPlayerID() - 1)]->download(l); // opponent downloads
   } else if (l->isOnOpponentFirewall(board)) {
-    l->onFirewall(board, players);
+    l->setIsFound(true);
+    if (l->getIsVirus()) {
+      players[l->getPlayerID() - 1]->download(l);
+    }
   } else if (l->isPastOpponentBoardEdge(board)) {
-    l->onPastBoardEdge(board, players);
+    l->setIsFound(true);
+    players[l->getPlayerID() - 1]->download(l); // owner downloads
   } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID()) {
     l->setRow(curRow);
     l->setCol(curCol);
     return false;
   } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID()) {
     // CONFLICT RESOLUTION
+    l->setIsFound(true);
+    board[l->getRow()][l->getCol()]->getLink()->setIsFound(true);
     if (l->battleLink(board[l->getRow()][l->getCol()]->getLink())) {
       players[l->getPlayerID() - 1]->download(board[l->getRow()][l->getCol()]->getLink());
       board[l->getRow()][l->getCol()]->setLink(l);
@@ -92,5 +99,5 @@ bool Game::moveLink(Link* l, char dir) {
   notifyObservers(this);
   players[0]->setTurn(!players[0]->getIsTurn());
   players[1]->setTurn(!players[1]->getIsTurn());
-
+  return true;
 }
