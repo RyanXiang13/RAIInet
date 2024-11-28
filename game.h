@@ -25,10 +25,8 @@ public:
     char charAt(int i, int j) override; // should return "." if nothing in cell, and link char otherwise
     void initBoard();
     void initLinks();
-    //void setUpdates(bool downloadedLinks, bool abilityCounter, bool knownLinks, bool cells); // set the text/graphical displays that need to be updated
-    void attach(std::unique_ptr<Observer> o) override;
-    void detach(Observer* o) override;
-    void notifyObservers(Subject* whoFrom) override;
+    Link* getLinkFromID(char id, int player);
+    void setUpdates(bool downloadedLinks, bool abilityCounter, bool knownLinks, bool cells); // set the text/graphical displays that need to be updated
 };
 
 #endif

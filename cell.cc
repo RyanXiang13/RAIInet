@@ -4,7 +4,7 @@
 #include "link.h"
 #include "player.h"
 
-std::unique_ptr<Cell> Cell::create(int r, int c, bool sp, bool f, bool iu, Link* l)
+std::unique_ptr<Cell> Cell::create(int r, int c, int sp, int f, Link* l)
 {
     return std::unique_ptr<Cell>(new Cell(r, c, sp, f, iu, l));
 }

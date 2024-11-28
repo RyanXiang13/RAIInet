@@ -65,44 +65,61 @@ char Game::charAt(int i, int j) {
 }
 
 int Game::whosTurn() {
-  for (size_t i = 0; i < players.size(); ++i) {
-    if (players[i]->getIsTurn()) {
-      return i + 1;
-    }
+  if (players[0]->getIsTurn()) return 1;
+  if (players[1]->getIsTurn()) return 2;
+  return 1;
+}
+
+bool Game::moveLink(Link* l, char dir) {
+  int curRow = l->getRow();
+  int curCol = l->getCol();
+  /*
+  if (!l->moveLink(dir)){
+    return false;
   }
-  return 1; // default to player 1 for testing
-}
-
-char Game::getState(int row, int col) const {
-    if (board[row][col]->isEmpty()) {
-        return '.';
-    } else if (board[row][col]->getIsServerPort() != 0) {
-        return 'S';
-    } else if (board[row][col]->getIsFirewall() == 1) {
-        return 'm';
-    } else if (board[row][col]->getIsFirewall() == 2) {
-        return 'w';
+  */
+  l->moveLink(dir);
+  if (l->isOnOpponentServerPort(board)) {
+    l->setIsFound(true);
+    players[!(l->getPlayerID() - 1)]->download(l); // opponent downloads
+  } else if (l->isOnOpponentFirewall(board)) {
+    l->setIsFound(true);
+    if (l->getIsVirus()) {
+      players[l->getPlayerID() - 1]->download(l);
+    }
+  } else if (l->isPastOpponentBoardEdge(board)) {
+    l->setIsFound(true);
+    players[l->getPlayerID() - 1]->download(l); // owner downloads
+  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID()) {
+    l->setRow(curRow);
+    l->setCol(curCol);
+    return false;
+  } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID()) {
+    // CONFLICT RESOLUTION
+    l->setIsFound(true);
+    board[l->getRow()][l->getCol()]->getLink()->setIsFound(true);
+    if (l->battleLink(board[l->getRow()][l->getCol()]->getLink())) {
+      players[l->getPlayerID() - 1]->download(board[l->getRow()][l->getCol()]->getLink());
+      board[l->getRow()][l->getCol()]->setLink(l);
     } else {
-        return board[row][col]->getLink()->getID();
+      players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
     }
+  } else {
+    board[l->getRow()][l->getCol()]->setLink(l);
+  }
+  board[curRow][curCol]->setLink(nullptr);
+  int currentPlayer = l->getPlayerID() - 1;
+  players[currentPlayer]->setTurn(false);
+  players[1 - currentPlayer]->setTurn(true); 
+  notifyObservers(this);
+  return true;
 }
 
-void Game::attach(std::unique_ptr<Observer> o) {
-    observers.push_back(std::move(o));
-}
+Link* Game::getLinkFromID(char id, int player) {
 
-void Game::detach(Observer* o) {
-    auto it = std::find_if(observers.begin(), observers.end(),
-                          [o](const std::unique_ptr<Observer>& up) {
-                              return up.get() == o;
-                          });
-    if (it != observers.end()) {
-        observers.erase(it);
-    }
-}
-
-void Game::notifyObservers(Subject* whoFrom) {
-    for (auto& ob : observers) {
-        ob->notify(*whoFrom);
-    }
+  const auto& pLinks = players[player - 1]->getOwnedLinks();
+  for (const auto& link : pLinks) {
+    if (link->getID() == id) return link.get();
+  }
+  return nullptr;
 }

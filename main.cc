@@ -45,9 +45,29 @@ int main() {
     auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
     game.attach(std::move(graphicsObserver));
     game.notifyObservers(&game);
+    //game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
+    string command;
 
-    std::cout << "Press Enter to exit..." << std::endl;
-    std::cin.get();
+    while (cin >> command) {
+      if (command == "move") {
+        char id;
+        char dir;
+        cin >> id >> dir;
+        Link* toMove = game.getLinkFromID(id, game.whosTurn());
+        if (toMove) {
+          game.moveLink(toMove, dir);
+        }
 
+      } else if (command == "abilities") {
+        continue;
+      } else if (command == "ability") {
+        continue;
+      } else if (command == "board") {
+        continue;
+      } else if (command == "quit") {
+        break;
+      }
+      // add rest of commands
+    }
     return 0;
 }

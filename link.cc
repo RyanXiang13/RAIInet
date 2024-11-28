@@ -106,6 +106,10 @@ void Link::setPlayerID(int id)
     this->playerID = id;
 }
 
+void Link::setIsFound(bool f) {
+    isFound = f;
+}
+
 void Link::setIsDownloaded(bool d)
 {
     this->isDownloaded = d;
@@ -134,7 +138,7 @@ bool Link::hasAbility(int abilityID) const
 bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
     // check if the cell the link is on has an opponent's firewall
-    if (board[this->row][this->col]->getIsFirewall() != this->playerID)
+    if (board[this->row][this->col]->getIsServerPort() != 0 && board[this->row][this->col]->getIsFirewall() != this->playerID)
     { // must be on the opposite player's firewall to mean anything
         return true;
     }
@@ -144,7 +148,7 @@ bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> 
 bool Link::isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
     // check if the cell the link is on has one of the opposing player's server ports
-    if (board[this->row][this->col]->getIsServerPort() != this->playerID)
+    if (board[this->row][this->col]->getIsServerPort() != 0 && board[this->row][this->col]->getIsServerPort() != this->playerID)
     { // must be on the opposite player's server port to mean anything
         return true;
     }
@@ -188,22 +192,9 @@ bool Link::battleLink( Link* l)
     return this->strength >= l->strength; // initiator wins if their strength is equal as well
 }
 
-void Link::onServerPort(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
-{
-    // server port owner downloads the link
-    this->setIsDownloaded(true);
-    board[this->row][this->col]->transferLinkToPlayer(*players[board[this->row][this->col]->getIsServerPort()]); // switch ownership of the link to the server port owner
-}
-
-void Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
+bool Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // simply call the activate firewall function
-    Firewall::activate(*this, *board[this->row][this->col], players);
+    return Firewall::activate(*this, *board[this->row][this->col], players);
 }
 
-void Link::onPastBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
-{
-    // link owner downloads the link
-    this->setIsDownloaded(true);
-    board[this->row][this->col]->transferLinkToPlayer(*players[this->playerID]); // switch ownership of the link to the link player
-}

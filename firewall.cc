@@ -39,11 +39,7 @@ bool Firewall::activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Play
     }
     // firewall is guaranteed to have an effect
     // 1. if the link is a virus, the link is downloaded by its owner
-    if (l.getIsVirus())
-    {
-        l.setIsDownloaded(true);
-        c.transferLinkToPlayer(*players[l.getPlayerID()]); // cell handles the transfer as it is the owner of the link
-    }
+    // handled in game
     // 2. the link must also be revealed whether or not it is a virus
     players[c.getIsFirewall()]->addKnownLink(l.getName());
     return true;
