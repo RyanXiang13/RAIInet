@@ -157,13 +157,13 @@ bool Link::isOnOpponentServerPort(std::vector<std::vector<std::unique_ptr<Cell>>
 
 bool Link::isPastOpponentBoardEdge(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
-    // check if the link has moved past the opposing player's board edge
-    if (this->playerID == 1)
-    { // must move past top edge (row 0) and not the bottom edge
+    if (this->playerID == 1) {
+        // Player 1 starts at top (row 0), should check bottom edge
+        return this->row >= Game::height;
+    } else {
+        // Player 2 starts at bottom (row 7), should check top edge
         return this->row < 0;
     }
-    // must move past the bottom edge (row Game::height - 1) and not the top edge
-    return this->row > Game::height - 1;
 }
 
 void Link::moveLink(char dir)

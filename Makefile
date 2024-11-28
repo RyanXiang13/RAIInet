@@ -1,11 +1,12 @@
 CXX = g++
-CXXFLAGS = -std=c++14 -Wall -frtti -MMD
+CXXFLAGS = -std=c++14 -Wall -frtti -MMD -I/usr/X11R6/include
+LDFLAGS = -L/usr/X11R6/lib -lX11
 EXEC = raiinet
-OBJECTS = subject.o link.o player.o cell.o firewall.o textobserver.o game.o main.o
+OBJECTS = subject.o link.o player.o cell.o firewall.o textobserver.o graphicsobserver.o window.o game.o main.o
 DEPENDS = ${OBJECTS:.o=.d}
 
 ${EXEC}: ${OBJECTS}
-	${CXX} -frtti ${OBJECTS} -o ${EXEC}
+	${CXX} -frtti ${OBJECTS} ${LDFLAGS} -o ${EXEC}
 
 -include ${DEPENDS}
 

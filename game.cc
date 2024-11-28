@@ -3,6 +3,7 @@
 #include "cell.h"
 #include <vector>
 #include <memory>
+#include <algorithm>
 #include <iostream>
 
 Game::Game(std::unique_ptr<Player> p1, std::unique_ptr<Player> p2) {
@@ -108,4 +109,38 @@ Link* Game::getLinkFromID(char id, int player) {
     if (link->getID() == id) return link.get();
   }
   return nullptr;
+}
+
+void Game::attach(std::unique_ptr<Observer> o) {
+    observers.push_back(std::move(o));
+}
+
+void Game::detach(Observer* o) {
+    auto it = std::find_if(observers.begin(), observers.end(),
+                          [o](const std::unique_ptr<Observer>& up) {
+                              return up.get() == o;
+                          });
+    if (it != observers.end()) {
+        observers.erase(it);
+    }
+}
+
+void Game::notifyObservers(Subject* whoFrom) {
+    for (auto& ob : observers) {
+        ob->notify(*whoFrom);
+    }
+}
+
+char Game::getState(int row, int col) const {
+    if (board[row][col]->isEmpty()) {
+        return '.';
+    } else if (board[row][col]->getIsServerPort() != 0) {
+        return 'S';
+    } else if (board[row][col]->getIsFirewall() == 1) {
+        return 'm';
+    } else if (board[row][col]->getIsFirewall() == 2) {
+        return 'w';
+    } else {
+        return board[row][col]->getLink()->getID();
+    }
 }
