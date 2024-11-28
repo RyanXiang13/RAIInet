@@ -38,17 +38,15 @@ int main() {
     auto player2 = Player::create(2, false, std::vector<int>(9, 2), std::move(p2Links));
     cout << player2->getPlayerID() << endl;
     cout << player2->getOwnedLinks()[6]->getID() << endl;
-    // Create game
     Game game{std::move(player1), std::move(player2)};
   
-    auto observer = std::make_unique<TextObserver>(true);
-    game.attach(std::move(observer));
-    
-    auto graphicsObs = std::make_unique<GraphicsObserver>(&game, 400, 400);
-    game.attach(std::move(graphicsObs));
+    auto textObserver = std::make_unique<TextObserver>(true);
+    game.attach(std::move(textObserver));
+    auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
+    game.attach(std::move(graphicsObserver));
     game.notifyObservers(&game);
 
-    std::cout << "Press any key to exit..." << std::endl;
+    std::cout << "Press Enter to exit..." << std::endl;
     std::cin.get();
 
     return 0;
