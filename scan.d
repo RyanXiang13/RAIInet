@@ -1,2 +1,2 @@
-scan.o: scan.cc scan.h ability.h game.h subject.h observer.h player.h \
-  link.h cell.h
+scan.o: scan.cc scan.h ability.h link.h player.h cell.h game.h subject.h \
+  observer.h
