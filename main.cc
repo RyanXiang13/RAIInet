@@ -4,6 +4,7 @@
 #include "game.h"
 #include "player.h"
 #include "link.h"
+#include "ability.h"
 #include "textobserver.h"
 #include "graphicsobserver.h"
 using namespace std;
@@ -34,8 +35,10 @@ int main()
   p2Links.push_back(Link::create(7, 7, 4, 1, true, 'H', 2, false));
 
   // Create players
-  auto player1 = Player::create(1, true, std::vector<int>(9, 2), std::move(p1Links));
-  auto player2 = Player::create(2, false, std::vector<int>(9, 2), std::move(p2Links));
+  std::vector<std::unique_ptr<Ability>> p1Abilities;
+  p1Abilities.push_back(std::make_unique<Download>());
+  auto player1 = Player::create(1, true, p1Abilities, std::move(p1Links));
+  auto player2 = Player::create(2, false, std::vector<std::unique_ptr<Ability>>(5, nullptr), std::move(p2Links));
   cout << player2->getPlayerID() << endl;
   cout << player2->getOwnedLinks()[6]->getID() << endl;
   Game game{std::move(player1), std::move(player2)};
@@ -63,11 +66,14 @@ int main()
     }
     else if (command == "abilities")
     {
-      continue;
+      game.displayAbilities(game.getPlayer(game.whosTurn() - 1));
     }
     else if (command == "ability")
     {
-      continue;
+      int ability;
+      cin >> ability;
+      //Link *toDownload = game.getLinkFromID(id, game.notTurn());
+      game.useAbility(ability, game.whosTurn());
     }
     else if (command == "board")
     {

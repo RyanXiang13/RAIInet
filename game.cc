@@ -1,6 +1,8 @@
 #include "game.h"
 #include "player.h"
 #include "cell.h"
+#include "link.h"
+#include "ability.h"
 #include <vector>
 #include <memory>
 #include <algorithm>
@@ -74,6 +76,16 @@ int Game::whosTurn()
     if (players[1]->getIsTurn())
         return 2;
     return 1;
+}
+
+int Game::notTurn() {
+  if (players[0]->getIsTurn()) {
+    return 2;
+  }
+  if (players[1]->getIsTurn()) {
+    return 1;
+  }
+  return 2;
 }
 
 bool Game::moveLink(Link *l, char dir)
@@ -204,4 +216,17 @@ char Game::getState(int row, int col) const
 void Game::clearObservers()
 {
     observers.clear();
+}
+
+bool Game::useAbility(int a, int pID) {
+  const auto& abilities = players[pID - 1]->getAbilities();
+  for (const auto& ability : abilities) {
+    if (ability->getID() == a && !ability->isUsed()) {
+      ability->use(pID, this);
+    }
+  }
+}
+
+Cell* Game::getCell(int row, int col) {
+  return board[row][col].get();
 }

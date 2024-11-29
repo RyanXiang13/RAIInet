@@ -19,6 +19,7 @@ private:
 public:
     TextObserver(bool twoPlayers);
     void notify(Subject &subject) override;
+    void printAbilities(Player& player);
 };
 
 #endif

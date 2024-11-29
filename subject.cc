@@ -1,5 +1,6 @@
 #include "subject.h"
 #include "observer.h"
+#include "player.h"
 #include <algorithm>
 
 void Subject::attach(std::unique_ptr<Observer> o)
@@ -25,5 +26,11 @@ void Subject::notifyObservers(Subject *game)
     for (const auto &ob : observers)
     {
         ob->notify(*game);
+    }
+}
+
+void Subject::displayAbilities(Player *player) {
+    for (const auto&ob : observers) {
+        ob->displayAbilities(*player);
     }
 }

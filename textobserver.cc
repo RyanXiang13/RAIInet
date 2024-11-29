@@ -82,3 +82,14 @@ void TextObserver::updateKnownLinks(Player& player) {
     count++;
   }
 }
+
+void TextObserver::printAbilities(Player& player) {
+  const auto& abilities = player.getAbilities();
+  for (const auto& ability : abilities) {
+    cout << ability->getID() << ". " << ability->getName();
+    if (ability->isUsed()) {
+      cout << " USED";
+    }
+    cout << endl;
+  }
+}
