@@ -18,6 +18,7 @@ public:
     virtual void notifyObservers(Subject *whoFrom);
     virtual void displayAbilities(Player *player);
     virtual void displayWin(int winner);
+    virtual void displayWelcome();
     virtual char charAt(int row, int col) = 0;
     virtual int whosTurn() = 0;
     virtual char getState(int row, int col) const = 0;

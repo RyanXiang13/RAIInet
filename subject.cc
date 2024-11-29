@@ -40,3 +40,9 @@ void Subject::displayWin(int winner) {
         ob->displayWin(winner);
     }
 }
+
+void Subject::displayWelcome() {
+    for (const auto&ob : observers) {
+        ob->displayWelcome();
+    }
+}

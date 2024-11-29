@@ -102,3 +102,7 @@ void TextObserver::displayAbilities(Player& player) {
     cout << endl;
   }
 }
+
+void TextObserver::displayWelcome() {
+  cout << "Welcome to the game!" << endl;
+}

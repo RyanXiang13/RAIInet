@@ -19,7 +19,8 @@ public:
     TextObserver(bool twoPlayers);
     void notify(Subject &subject) override;
     void displayAbilities(Player& player) override;
-    void displayWin(int winner);
+    void displayWin(int winner) override;
+    void displayWelcome() override;
 };
 
 #endif

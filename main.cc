@@ -169,6 +169,7 @@ int main(int argc, char* argv[])
     game.attach(std::move(p1Window));
     game.attach(std::move(p2Window));
   }
+
   game.notifyObservers(&game);
 
   string command;
