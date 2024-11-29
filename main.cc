@@ -10,6 +10,7 @@
 #include "ability.h"
 #include "textobserver.h"
 #include "graphicsobserver.h"
+#include "buff.h"
 #include "download.h"
 #include "scan.h"
 #include "firewall.h"
@@ -84,6 +85,9 @@ int main(int argc, char* argv[])
     else if (a == 'X') {
       p1Abilities.emplace_back(std::make_unique<SkipTurn>());
     }
+    else if (a == 'B') {
+      p1Abilities.emplace_back(std::make_unique<Buff>());
+    }
     else if (a == 'T') {
       p1Abilities.emplace_back(std::make_unique<Teleport>());
     }
@@ -106,6 +110,9 @@ int main(int argc, char* argv[])
     }
     else if (a == 'X') {
       p2Abilities.emplace_back(std::make_unique<SkipTurn>());
+    }
+    else if (a == 'B') {
+      p2Abilities.emplace_back(std::make_unique<Buff>());
     }
     else if (a == 'T') {
       p2Abilities.emplace_back(std::make_unique<Teleport>());
