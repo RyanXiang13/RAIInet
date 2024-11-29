@@ -11,7 +11,8 @@ class LinkBoost : public Ability
 public:
     static const int ID = 1;
     const int boostAmount = 1;
-    bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
+    LinkBoost() : Ability("LinkBoost", ID) {}
+    bool use(int curPlayerID, Game* game) override;
 };
 
 #endif

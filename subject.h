@@ -2,7 +2,6 @@
 #define SUBJECT_H
 #include <vector>
 #include <memory>
-#include "observer.h"
 
 class Player;
 class Observer;
@@ -17,6 +16,7 @@ public:
     virtual void attach(std::unique_ptr<Observer> o);
     virtual void detach(Observer *o);
     virtual void notifyObservers(Subject *whoFrom);
+    virtual void displayAbilities(Player *player);
     virtual char charAt(int row, int col) = 0;
     virtual int whosTurn() = 0;
     virtual char getState(int row, int col) const = 0;

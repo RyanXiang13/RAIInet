@@ -4,6 +4,7 @@
 #include "link.h"
 #include <memory>
 #include <vector>
+#include <iostream>
 
 char getSymbol(int playerID)
 {
@@ -14,22 +15,29 @@ char getSymbol(int playerID)
     return Firewall::symbol_2;
 }
 
-bool Firewall::use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players)
+bool Firewall::use(int curPlayerID, Game* game)
 {
     // verify that
     // 1. the person using it has the firewall ability
     // 2. the cell is valid
     // 3. the cell is empty and not a server port or firewall
-    if (!players[curPlayerID]->hasAbility(Firewall::ID) || !c->isValid() || !c->isEmpty() || c->getIsServerPort() || c->getIsFirewall())
-    {
+    int row, col;
+    std::cin >> row >> col;
+    
+    Cell* c = game->getCell(row, col);
+    
+    // verify conditions
+    if (!c->isValid() || !c->isEmpty() || c->getIsServerPort() || c->getIsFirewall()) {
         return false;
     }
+    
     // successfully place the firewall
     c->setIsFirewall(curPlayerID);
+    setUsed(true);
     return true;
 }
 
-bool Firewall::activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Player>> &players)
+bool Firewall::activate(Link &l, Cell &c)
 {
     // verify that
     // 1. the link and firewall are not owned by the same player

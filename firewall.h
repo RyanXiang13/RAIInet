@@ -14,8 +14,9 @@ public:
     static const char symbol_1 = 'm';
     static const char symbol_2 = 'w';
     static char getSymbol(int playerID);
-    static bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
-    static bool activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Player>> &players);
+    Firewall() : Ability("Firewall", ID) {}
+    bool use(int curPlayerID, Game* game) override;
+    static bool activate(Link &l, Cell &c);
 };
 
 #endif

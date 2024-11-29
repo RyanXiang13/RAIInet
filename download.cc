@@ -2,23 +2,27 @@
 #include <memory>
 #include "link.h"
 #include <vector>
+#include <iostream>
 #include "cell.h"
 #include "player.h"
-
-bool Download::use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players)
+#include "game.h"
+#include <iostream>
+bool Download::use(int curPlayerID, Game* game)
 {
-    // verify that
-    // 1. the person using it is targeting an opponents link
-    // 2. the link is not already downloaded
-    // 3. the initiator player has the download ability
-    if (curPlayerID != l->getPlayerID() || l->getIsDownloaded() || !players[curPlayerID]->hasAbility(Download::ID))
+    char linkID;
+    std::cin >> linkID;
+    Link* l = game->getLinkFromID(linkID, game->notTurn());
+    std::cout << game->notTurn() << std::endl;
+    // Add nullptr check
+    if (!l || curPlayerID == l->getPlayerID() || l->getIsDownloaded())
     {
         return false;
     }
+    
     // successfully download the link
-    l->setIsDownloaded(true);                              // set the link to inactive
-    players[curPlayerID]->removeAbility(Download::ID);     // remove from initiator player's list of abilities
-    players[curPlayerID]->addDownloadedLink(std::move(l)); // add to initiator player's list of downloaded links
-    players[curPlayerID]->addKnownLink(l->getName());      // add to initiator player's list of known links
+    game->getPlayer(curPlayerID - 1)->download(l);
+    game->getCell(l->getRow(), l->getCol())->setLink(nullptr);
+    std::cout << curPlayerID << std::endl;
+    setUsed(true);
     return true;
 }

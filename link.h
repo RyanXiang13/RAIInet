@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+class Ability;
+class Cell;
 class Link
 {
 private:

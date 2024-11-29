@@ -11,7 +11,8 @@ class SkipTurn : public Ability
 {
 public:
     static const int ID = 6;
-    static bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
+    SkipTurn() : Ability("SkipTurn", ID) {}
+    bool use(int curPlayerID, Game* game) override;
 };
 
 #endif

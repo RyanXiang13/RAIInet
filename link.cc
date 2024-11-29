@@ -123,7 +123,7 @@ void Link::addMoveStrength()
 {
     this->moveStrength++;
 }
-
+/*
 void Link::addAbility(int abilityID)
 {
     this->abilities[abilityID]++;
@@ -138,11 +138,12 @@ bool Link::hasAbility(int abilityID) const
 {
     return this->abilities[abilityID] > 0; // as long as there are at least 1
 }
+*/
 
 bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {
     // check if the cell the link is on has an opponent's firewall
-    if (board[this->row][this->col]->getIsServerPort() != 0 && board[this->row][this->col]->getIsFirewall() != this->playerID)
+    if (board[this->row][this->col]->getIsFirewall() != 0 && board[this->row][this->col]->getIsFirewall() != this->playerID)
     { // must be on the opposite player's firewall to mean anything
         return true;
     }
@@ -223,5 +224,5 @@ bool Link::battleLink(Link *l)
 bool Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // simply call the activate firewall function
-    return Firewall::activate(*this, *board[this->row][this->col], players);
+    return Firewall::activate(*this, *board[this->row][this->col]);
 }

@@ -11,8 +11,8 @@ class Download : public Ability
 {
 public:
     static const int ID = 3;
-    static std::unique_ptr<Download> create(int playerID = -1, bool isActive = false, bool isUsed = false);
-    bool use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players);
+    Download() : Ability("Download", ID) {}
+    bool use(int curPlayerID, Game* game);
 };
 
 #endif

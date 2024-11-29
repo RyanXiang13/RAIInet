@@ -1,2 +1,2 @@
-game.o: game.cc game.h subject.h observer.h cell.h link.h player.h \
+game.o: game.cc game.h subject.h observer.h player.h link.h cell.h \
   ability.h

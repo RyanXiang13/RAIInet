@@ -4,23 +4,31 @@
 #include "link.h"
 #include "cell.h"
 #include "player.h"
-
-bool Teleport::use(int curPlayerID, std::unique_ptr<Link> l, std::unique_ptr<Cell> c, const std::vector<std::unique_ptr<Player>> &players)
+#include <iostream>
+bool Teleport::use(int curPlayerID, Game* game)
 {
-    // verify that
-    // 1. the player has the teleport ability
-    // 2. the targeted link is not already downloaded
-    // 3. the targeted link is not the opposing player's link
-    // 4. the targeted cell is empty
-    if (!players[curPlayerID]->hasAbility(Teleport::ID) ||
-        l->getIsDownloaded() ||
-        curPlayerID != l->getPlayerID() ||
-        !c->isEmpty())
-    {
+    // Get link ID and destination coordinates from input
+    char linkID;
+    int row, col;
+    std::cin >> linkID >> row >> col;
+    
+    Link* l = game->getLinkFromID(linkID, curPlayerID);
+    Cell* c = game->getCell(row, col);
+    
+    // verify conditions
+    if (!l || !c || l->getIsDownloaded() || c->getIsServerPort() || c->getLink()) {
         return false;
     }
-    // apply the teleport (move the link to the targeted cell)
-    players[curPlayerID]->removeAbility(Teleport::ID); // remove the ability from the player (one)
-    c->setLink(std::move(l));                          // transfer ownership of the link to the cell
+    
+    // Move the link
+    game->getCell(l->getRow(), l->getCol())->setLink(nullptr);
+    l->setRow(row);
+    l->setCol(col);
+    c->setLink(l);
+    setUsed(true);
+    int currentPlayer = l->getPlayerID() - 1;
+    game->getPlayer(currentPlayer)->setTurn(false);
+    game->getPlayer(1 - currentPlayer)->setTurn(true);
+    game->notifyObservers(game);
     return true;
 }
