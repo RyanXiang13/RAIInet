@@ -7,7 +7,7 @@ class Link;
 class Cell;
 class Player;
 
-class Ability // Pure static utility class, no instantiation
+class Ability
 {
 protected:
     int id = 0;

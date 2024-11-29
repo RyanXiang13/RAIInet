@@ -66,8 +66,10 @@ int main()
   game.attach(std::move(textObserver));
   // top 400x100 for p1, bottom 400x100 for p2
   // game is 400x400
-  auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 600, 100, 400, 8);
-  game.attach(std::move(graphicsObserver));
+  std::unique_ptr<GraphicsObserver> p1Window = std::make_unique<GraphicsObserver>(&game, 1);  // P1 at top
+  std::unique_ptr<GraphicsObserver> p2Window = std::make_unique<GraphicsObserver>(&game, 2);  // P2 at top;
+  game.attach(std::move(p1Window));
+  game.attach(std::move(p2Window));
   game.notifyObservers(&game);
   string command;
   bool abilityUsed = false;
@@ -112,14 +114,10 @@ int main()
     {
       game.notifyObservers(&game);
     }
-    else if (command == "sequence")
-    {
-      continue;
-    }
     else if (command == "quit")
     {
       game.clearObservers();
-      break;
+      return 0;
     }
     else if (command == "sequence") 
     {

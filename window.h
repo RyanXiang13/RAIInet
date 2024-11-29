@@ -17,7 +17,7 @@ public:
     ~Xwindow();                                 // Destructor; destroys the window.
 
     enum
-    {White=0, Black, LightGray, DarkGray, Silver, Charcoal, Ivory, Slate}; // Available colours.
+    {White=0, Black, LightGray, DarkGray, Silver, Charcoal, Ivory, Slate, Green, Red, Orange}; // Available colours.
 
     int getWidth() const;
     int getHeight() const;
