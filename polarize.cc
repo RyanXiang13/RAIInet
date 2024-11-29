@@ -4,6 +4,7 @@
 #include "link.h"
 #include "cell.h"
 #include "player.h"
+#include "game.h"
 #include <iostream>
 
 bool Polarize::use(int curPlayerID, Game* game)

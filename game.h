@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include "player.h"
+#include "ability.h"
 
 class Link;
 class Cell;

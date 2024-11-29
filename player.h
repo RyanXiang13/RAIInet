@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include "link.h"
+#include "ability.h"
 
 class Link;
 class Ability;
@@ -20,7 +21,11 @@ private:
     int virusDownloaded;
 
 public:
-    static std::unique_ptr<Player> create(int id, bool isTurn, std::vector<std::unique_ptr<Ability>> a = std::vector<std::unique_ptr<Ability>>(5, nullptr), std::vector<std::unique_ptr<Link>> l = std::vector<std::unique_ptr<Link>>(), int dataDownloaded = 0, int virusDownloaded = 0);
+    static std::unique_ptr<Player> create(int id, bool isTurn, 
+        std::vector<std::unique_ptr<Ability>> a = std::vector<std::unique_ptr<Ability>>(),
+        std::vector<std::unique_ptr<Link>> l = std::vector<std::unique_ptr<Link>>(),
+        int dataDownloaded = 0, 
+        int virusDownloaded = 0);
     int getPlayerID() const;
     bool getIsTurn() const;
     void setTurn(bool b);

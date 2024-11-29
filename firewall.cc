@@ -2,6 +2,7 @@
 #include "cell.h"
 #include "player.h"
 #include "link.h"
+#include "game.h"
 #include <memory>
 #include <vector>
 #include <iostream>

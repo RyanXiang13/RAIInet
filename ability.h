@@ -2,7 +2,9 @@
 #define ABILITY_H
 #include <memory>
 #include <vector>
-#include "game.h"
+#include <string>
+
+class Game;
 class Link;
 class Cell;
 class Player;

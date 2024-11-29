@@ -5,6 +5,7 @@
 #include "cell.h"
 #include "player.h"
 #include <iostream>
+#include "game.h"
 
 bool Scan::use(int curPlayerID, Game* game)
 {

@@ -5,6 +5,8 @@
 #include "cell.h"
 #include "player.h"
 #include <iostream>
+#include "game.h"
+
 bool Teleport::use(int curPlayerID, Game* game)
 {
     // Get link ID and destination coordinates from input

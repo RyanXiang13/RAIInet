@@ -4,6 +4,7 @@
 #include "link.h"
 #include "cell.h"
 #include "player.h"
+#include "game.h"
 
 bool SkipTurn::use(int curPlayerID, Game* game)
 {
