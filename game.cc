@@ -55,6 +55,10 @@ char Game::charAt(int i, int j)
     {
         return 'S';
     }
+    else if (board[i][j]->getIsFirewall() && board[i][j]->getLink())
+    {
+      return board[i][j]->getLink()->getID();
+    }
     else if (board[i][j]->getIsFirewall() == 1)
     {
         return 'm';

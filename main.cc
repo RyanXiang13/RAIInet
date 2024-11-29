@@ -52,7 +52,7 @@ int main()
   p2Abilities.emplace_back(std::make_unique<Polarize>());
   p2Abilities.emplace_back(std::make_unique<Firewall>());
   p2Abilities.emplace_back(std::make_unique<Download>());
-  p2Abilities.emplace_back(std::make_unique<LinkBoost>());
+  p2Abilities.emplace_back(std::make_unique<Scan>());
 
   auto player1 = Player::create(1, true, std::move(p1Abilities), std::move(p1Links));
   auto player2 = Player::create(2, false, std::move(p2Abilities), std::move(p2Links));
