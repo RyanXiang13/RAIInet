@@ -55,7 +55,7 @@ char Game::charAt(int i, int j)
     {
         return 'S';
     }
-    else if (board[i][j]->getIsFirewall() && board[i][j]->getLink())
+    else if (board[i][j]->getIsFirewall() && board[i][j]->getLink()) // FIX
     {
       return board[i][j]->getLink()->getID();
     }
@@ -69,7 +69,7 @@ char Game::charAt(int i, int j)
     }
     else
     {
-        return board[i][j]->getLink()->getID();
+      return board[i][j]->getLink()->getID();
     }
 }
 
@@ -112,7 +112,24 @@ bool Game::moveLink(Link *l, char dir)
         l->setIsFound(true);
         if (l->getIsVirus())
         {
-            players[l->getPlayerID() - 1]->download(l);
+          players[l->getPlayerID() - 1]->download(l);
+        } 
+        else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
+        {
+          // CONFLICT RESOLUTION
+          l->setIsFound(true);
+          board[l->getRow()][l->getCol()]->getLink()->setIsFound(true);
+          if (l->battleLink(board[l->getRow()][l->getCol()]->getLink()))
+          {
+            players[l->getPlayerID() - 1]->download(board[l->getRow()][l->getCol()]->getLink());
+            board[l->getRow()][l->getCol()]->setLink(l);
+          }
+          else
+          {
+            players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
+          }
+        } else {
+          board[l->getRow()][l->getCol()]->setLink(l);
         }
     }
     else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID())
@@ -126,8 +143,7 @@ bool Game::moveLink(Link *l, char dir)
       l->setRow(curRow);
       l->setCol(curCol);
       return false;
-    }
-    else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
+    } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
     {
         // CONFLICT RESOLUTION
         l->setIsFound(true);
