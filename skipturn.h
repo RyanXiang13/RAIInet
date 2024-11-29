@@ -11,7 +11,7 @@ class SkipTurn : public Ability
 {
 public:
     static const int ID = 6;
-    SkipTurn() : Ability("SkipTurn", ID) {}
+    SkipTurn() : Ability("XtraTurn", ID) {}
     bool use(int curPlayerID, Game* game) override;
 };
 

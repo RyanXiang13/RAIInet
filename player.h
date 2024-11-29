@@ -13,6 +13,7 @@ private:
     Player(int id, bool isTurn, std::vector<std::unique_ptr<Ability>> a, std::vector<std::unique_ptr<Link>> l, int dD, int vD);
     int playerID;
     bool isTurn;
+    bool extraTurn;
     std::vector<std::unique_ptr<Ability>> abilities;              // pointers to abilities
     std::vector<std::unique_ptr<Link>> ownedLinks;                // stores all names of links that the player owns              // stores all names of links that the player knows the opponent has
     int dataDownloaded;
@@ -23,6 +24,8 @@ public:
     int getPlayerID() const;
     bool getIsTurn() const;
     void setTurn(bool b);
+    bool getExtraTurn() const;
+    void setExtraTurn(bool b);
     int getNumOfData() const;
     int getNumOfVirus() const;
     const std::vector<std::unique_ptr<Ability>> &getAbilities() const;

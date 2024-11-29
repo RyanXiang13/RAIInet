@@ -60,10 +60,19 @@ Player::Player(int id, bool isTurn, std::vector<std::unique_ptr<Ability>> a, std
             int dD, int vD) {
     playerID = id;
     this->isTurn = isTurn;
+    this->extraTurn = false;
     abilities = std::move(a);
     ownedLinks = std::move(l);
     dataDownloaded = dD;
     virusDownloaded = vD;
+}
+
+bool Player::getExtraTurn() const {
+    return extraTurn;
+}
+
+void Player::setExtraTurn(bool b) {
+    extraTurn = b;
 }
 
 // Missing methods

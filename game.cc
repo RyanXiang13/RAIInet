@@ -175,8 +175,12 @@ bool Game::moveLink(Link *l, char dir)
     }
     board[curRow][curCol]->setLink(nullptr);
     int currentPlayer = l->getPlayerID() - 1;
-    players[currentPlayer]->setTurn(false);
-    players[1 - currentPlayer]->setTurn(true);
+    if (players[currentPlayer]->getExtraTurn()) { 
+      players[currentPlayer]->setExtraTurn(false);
+    } else {
+      players[currentPlayer]->setTurn(false);
+      players[1 - currentPlayer]->setTurn(true);
+    }
     notifyObservers(this);
     return true;
 }
