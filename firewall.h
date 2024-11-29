@@ -16,7 +16,7 @@ public:
     static char getSymbol(int playerID);
     Firewall() : Ability("Firewall", ID) {}
     bool use(int curPlayerID, Game* game) override;
-    //static bool activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Player>> &players);
+    static bool activate(Link &l, Cell &c);
 };
 
 #endif

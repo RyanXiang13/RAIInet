@@ -16,7 +16,7 @@ protected:
 public:
     Ability(const std::string& name, int id) : id{id}, name{name}, used{false} {}
     virtual ~Ability() = default;
-    virtual bool use(int curPlayerID, Game* game);
+    virtual bool use(int curPlayerID, Game* game) = 0;
 
     const std::string& getName() const { return name; }
     const int& getID() const { return id; }

@@ -6,22 +6,23 @@
 #include "cell.h"
 #include "player.h"
 #include "game.h"
+#include <iostream>
 bool Download::use(int curPlayerID, Game* game)
 {
-    // verify that
-    // 1. the person using it is targeting an opponents link
-    // 2. the link is not already downloaded
-    // 3. the initiator player has the download ability
     char linkID;
     std::cin >> linkID;
     Link* l = game->getLinkFromID(linkID, game->notTurn());
-
-    if (curPlayerID == l->getPlayerID() || l->getIsDownloaded())
+    std::cout << game->notTurn() << std::endl;
+    // Add nullptr check
+    if (!l || curPlayerID == l->getPlayerID() || l->getIsDownloaded())
     {
         return false;
     }
+    
     // successfully download the link
-    game->getPlayer(curPlayerID)->download(l);
+    game->getPlayer(curPlayerID - 1)->download(l);
+    game->getCell(l->getRow(), l->getCol())->setLink(nullptr);
+    std::cout << curPlayerID << std::endl;
     setUsed(true);
     return true;
 }

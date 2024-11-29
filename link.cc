@@ -224,5 +224,5 @@ bool Link::battleLink(Link *l)
 bool Link::onFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board, std::vector<std::unique_ptr<Player>> &players)
 {
     // simply call the activate firewall function
-    return Firewall::activate(*this, *board[this->row][this->col], players);
+    return Firewall::activate(*this, *board[this->row][this->col]);
 }

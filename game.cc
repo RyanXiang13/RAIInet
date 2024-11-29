@@ -222,9 +222,13 @@ bool Game::useAbility(int a, int pID) {
   const auto& abilities = players[pID - 1]->getAbilities();
   for (const auto& ability : abilities) {
     if (ability->getID() == a && !ability->isUsed()) {
-      ability->use(pID, this);
+      bool result = ability->use(pID, this);  // Return the result of use()
+      notifyObservers(this);
+      return result;
     }
   }
+  notifyObservers(this);
+  return false;
 }
 
 Cell* Game::getCell(int row, int col) {

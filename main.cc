@@ -7,6 +7,12 @@
 #include "ability.h"
 #include "textobserver.h"
 #include "graphicsobserver.h"
+#include "download.h"
+#include "download.h"
+#include "scan.h"
+#include "firewall.h"
+#include "polarize.h"
+#include "linkboost.h"
 using namespace std;
 
 int main()
@@ -21,7 +27,6 @@ int main()
   p1Links.push_back(Link::create(0, 5, 2, 1, true, 'f', 1, false));
   p1Links.push_back(Link::create(0, 6, 3, 1, true, 'g', 1, false));
   p1Links.push_back(Link::create(0, 7, 4, 1, true, 'h', 1, false));
-  cout << p1Links[0]->getCol() << endl;
 
   // p2 links
   std::vector<std::unique_ptr<Link>> p2Links;
@@ -36,17 +41,27 @@ int main()
 
   // Create players
   std::vector<std::unique_ptr<Ability>> p1Abilities;
-  p1Abilities.push_back(std::make_unique<Download>());
-  auto player1 = Player::create(1, true, p1Abilities, std::move(p1Links));
-  auto player2 = Player::create(2, false, std::vector<std::unique_ptr<Ability>>(5, nullptr), std::move(p2Links));
-  cout << player2->getPlayerID() << endl;
-  cout << player2->getOwnedLinks()[6]->getID() << endl;
+  p1Abilities.emplace_back(std::make_unique<Download>());
+  p1Abilities.emplace_back(std::make_unique<Scan>());
+  p1Abilities.emplace_back(std::make_unique<Scan>());
+  p1Abilities.emplace_back(std::make_unique<Firewall>());
+  p1Abilities.emplace_back(std::make_unique<Download>());
+
+  std::vector<std::unique_ptr<Ability>> p2Abilities;
+  p2Abilities.emplace_back(std::make_unique<Download>());
+  p2Abilities.emplace_back(std::make_unique<Polarize>());
+  p2Abilities.emplace_back(std::make_unique<Firewall>());
+  p2Abilities.emplace_back(std::make_unique<Download>());
+  p2Abilities.emplace_back(std::make_unique<LinkBoost>());
+
+  auto player1 = Player::create(1, true, std::move(p1Abilities), std::move(p1Links));
+  auto player2 = Player::create(2, false, std::move(p2Abilities), std::move(p2Links));
   Game game{std::move(player1), std::move(player2)};
 
   auto textObserver = std::make_unique<TextObserver>(true);
   game.attach(std::move(textObserver));
-  auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
-  game.attach(std::move(graphicsObserver));
+  //auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
+  //game.attach(std::move(graphicsObserver));
   game.notifyObservers(&game);
   // game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
   string command;
@@ -66,14 +81,18 @@ int main()
     }
     else if (command == "abilities")
     {
-      game.displayAbilities(game.getPlayer(game.whosTurn() - 1));
+      cout << "Debug: Displaying abilities" << endl;
+      game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
     }
     else if (command == "ability")
     {
       int ability;
       cin >> ability;
       //Link *toDownload = game.getLinkFromID(id, game.notTurn());
-      game.useAbility(ability, game.whosTurn());
+      bool result = game.useAbility(ability, game.whosTurn());
+      if (!result) {
+        cout << "Ability failed" << endl;
+      }
     }
     else if (command == "board")
     {

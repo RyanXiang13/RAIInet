@@ -3,6 +3,7 @@
 #include "game.h"
 #include "player.h"
 #include "link.h"
+#include "ability.h"
 
 using namespace std;
 
@@ -83,7 +84,7 @@ void TextObserver::updateKnownLinks(Player& player) {
   }
 }
 
-void TextObserver::printAbilities(Player& player) {
+void TextObserver::displayAbilities(Player& player) {
   const auto& abilities = player.getAbilities();
   for (const auto& ability : abilities) {
     cout << ability->getID() << ". " << ability->getName();

@@ -37,8 +37,7 @@ bool Firewall::use(int curPlayerID, Game* game)
     return true;
 }
 
-/*
-bool Firewall::activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Player>> &players)
+bool Firewall::activate(Link &l, Cell &c)
 {
     // verify that
     // 1. the link and firewall are not owned by the same player
@@ -51,4 +50,3 @@ bool Firewall::activate(Link &l, Cell &c, const std::vector<std::unique_ptr<Play
     // handled in game
     return true;
 }
-*/
