@@ -8,7 +8,6 @@
 #include "textobserver.h"
 #include "graphicsobserver.h"
 #include "download.h"
-#include "download.h"
 #include "scan.h"
 #include "firewall.h"
 #include "polarize.h"
@@ -63,10 +62,11 @@ int main()
 
   auto textObserver = std::make_unique<TextObserver>(true);
   game.attach(std::move(textObserver));
-  //auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
-  //game.attach(std::move(graphicsObserver));
+  // top 400x100 for p1, bottom 400x100 for p2
+  // game is 400x400
+  auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 600, 100, 400, 8);
+  game.attach(std::move(graphicsObserver));
   game.notifyObservers(&game);
-  // game.moveLink(game.getPlayer(0)->getOwnedLinks()[0].get(), 'D');
   string command;
 
   while (cin >> command)
@@ -98,6 +98,10 @@ int main()
       game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
     }
     else if (command == "board")
+    {
+      continue;
+    }
+    else if (command == "sequence")
     {
       continue;
     }
