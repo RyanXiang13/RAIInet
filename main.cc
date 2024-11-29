@@ -13,6 +13,9 @@
 #include "firewall.h"
 #include "polarize.h"
 #include "linkboost.h"
+#include "teleport.h"
+#include "skipturn.h"
+
 using namespace std;
 
 int main()
@@ -41,15 +44,15 @@ int main()
 
   // Create players
   std::vector<std::unique_ptr<Ability>> p1Abilities;
-  p1Abilities.emplace_back(std::make_unique<Download>());
+  p1Abilities.emplace_back(std::make_unique<SkipTurn>());
   p1Abilities.emplace_back(std::make_unique<Scan>());
-  p1Abilities.emplace_back(std::make_unique<Scan>());
+  p1Abilities.emplace_back(std::make_unique<Teleport>());
   p1Abilities.emplace_back(std::make_unique<Firewall>());
   p1Abilities.emplace_back(std::make_unique<Download>());
 
   std::vector<std::unique_ptr<Ability>> p2Abilities;
   p2Abilities.emplace_back(std::make_unique<Download>());
-  p2Abilities.emplace_back(std::make_unique<Polarize>());
+  p2Abilities.emplace_back(std::make_unique<SkipTurn>());
   p2Abilities.emplace_back(std::make_unique<Firewall>());
   p2Abilities.emplace_back(std::make_unique<Download>());
   p2Abilities.emplace_back(std::make_unique<Scan>());
@@ -68,6 +71,16 @@ int main()
 
   while (cin >> command)
   {
+    if (command == "ability")
+    {
+      int ability;
+      cin >> ability;
+      //Link *toDownload = game.getLinkFromID(id, game.notTurn());
+      bool result = game.useAbility(ability, game.whosTurn());
+      if (!result) {
+        cout << "Ability failed" << endl;
+      }
+    }
     if (command == "move")
     {
       char id;
@@ -83,16 +96,6 @@ int main()
     {
       cout << "Debug: Displaying abilities" << endl;
       game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
-    }
-    else if (command == "ability")
-    {
-      int ability;
-      cin >> ability;
-      //Link *toDownload = game.getLinkFromID(id, game.notTurn());
-      bool result = game.useAbility(ability, game.whosTurn());
-      if (!result) {
-        cout << "Ability failed" << endl;
-      }
     }
     else if (command == "board")
     {
