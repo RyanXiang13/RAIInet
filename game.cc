@@ -172,7 +172,6 @@ bool Game::moveLink(Link *l, char dir)
     {
         board[l->getRow()][l->getCol()]->setLink(l);
     }
-    std::cout << curRow << curCol << std::endl;
     board[curRow][curCol]->setLink(nullptr);
     int currentPlayer = l->getPlayerID() - 1;
     players[currentPlayer]->setTurn(false);

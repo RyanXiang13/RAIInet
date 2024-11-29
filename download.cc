@@ -12,7 +12,6 @@ bool Download::use(int curPlayerID, Game* game)
     char linkID;
     std::cin >> linkID;
     Link* l = game->getLinkFromID(linkID, game->notTurn());
-    std::cout << game->notTurn() << std::endl;
     // Add nullptr check
     if (!l || curPlayerID == l->getPlayerID() || l->getIsDownloaded())
     {
@@ -22,7 +21,6 @@ bool Download::use(int curPlayerID, Game* game)
     // successfully download the link
     game->getPlayer(curPlayerID - 1)->download(l);
     game->getCell(l->getRow(), l->getCol())->setLink(nullptr);
-    std::cout << curPlayerID << std::endl;
     setUsed(true);
     return true;
 }

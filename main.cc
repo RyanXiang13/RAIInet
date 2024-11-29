@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include "game.h"
 #include "player.h"
 #include "link.h"
@@ -114,7 +116,70 @@ int main()
       game.clearObservers();
       break;
     }
-    // add rest of commands
+    else if (command == "sequence") 
+    {
+      string filename;
+      cin >> filename;
+      
+      ifstream commandFile(filename);
+      if (!commandFile) {
+        cout << "Error: Could not open file " << filename << endl;
+        continue;
+      }
+
+      string fileCommand;
+      string line;
+      while (getline(commandFile, line)) {
+        istringstream iss(line);
+        iss >> fileCommand;
+        
+        if (fileCommand == "ability") {
+          if (abilityUsed) {
+            cout << "Ability already used this turn" << endl;
+            continue;
+          }
+          int ability;
+          iss >> ability;
+          string remaining;
+          getline(iss, remaining);
+          stringstream temp(remaining);
+          auto cinbuf = cin.rdbuf(temp.rdbuf());
+          bool result = game.useAbility(ability, game.whosTurn());
+          cin.rdbuf(cinbuf);
+          
+          if (!result) {
+              cout << "Ability failed" << endl;
+          } else {
+              abilityUsed = true;
+          }
+        }
+        else if (fileCommand == "move") {
+          char id, dir;
+          iss >> id >> dir;
+          Link *toMove = game.getLinkFromID(id, game.whosTurn());
+          if (toMove && !toMove->getIsDownloaded()) {
+            game.moveLink(toMove, dir);
+          }
+          abilityUsed = false;
+          if (game.checkWon()) {
+            game.clearObservers();
+            break;
+          }
+        }
+        else if (fileCommand == "abilities") {
+            game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
+        }
+        else if (fileCommand == "board") {
+            game.notifyObservers(&game);
+        }
+        else if (fileCommand == "quit") {
+            game.clearObservers();
+            commandFile.close();
+            return 0;
+        }
+      }
+      commandFile.close();
+    }
   }
   return 0;
 }
