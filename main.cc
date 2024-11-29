@@ -139,11 +139,12 @@ int main(int argc, char* argv[])
 
   auto textObserver = std::make_unique<TextObserver>(true);
   game.attach(std::move(textObserver));
-/*
   if (includeGraphics) {
-    auto graphicsObserver = std::make_unique<GraphicsObserver>(&game, 400, 400);
-    game.attach(std::move(graphicsObserver));
-  }*/
+    std::unique_ptr<GraphicsObserver> p1Window = std::make_unique<GraphicsObserver>(&game, 1);  // P1 at top
+    std::unique_ptr<GraphicsObserver> p2Window = std::make_unique<GraphicsObserver>(&game, 2);  // P2 at top;
+    game.attach(std::move(p1Window));
+    game.attach(std::move(p2Window));
+  }
   game.notifyObservers(&game);
 
   string command;
