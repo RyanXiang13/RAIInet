@@ -3,7 +3,8 @@
 #include <memory>
 #include <vector>
 #include <sstream>
-//#include <rand>
+#include <random>
+#include <algorithm>
 #include "game.h"
 #include "player.h"
 #include "link.h"
@@ -28,7 +29,8 @@ int main(int argc, char* argv[])
   vector<string> p1LinkOrder;
   vector<string> p2LinkOrder;
   bool includeGraphics = false;
-
+  bool link1Passed = false;
+  bool link2Passed = false;
   // parse command-line arguments
   for (int i = 1; i < argc; ++i) {
     if (string(argv[i]) == "-ability1" && i + 1 < argc) { // specify player 1 abilities
@@ -47,6 +49,7 @@ int main(int argc, char* argv[])
         while (file >> linkType) {
             p1LinkOrder.push_back(linkType);
         }
+        link1Passed = true;
     } else if (string(argv[i]) == "-link2" && i + 1 < argc) {
         // Load links from custom file for player 2
         ifstream file(argv[++i]);
@@ -59,10 +62,24 @@ int main(int argc, char* argv[])
         while (file >> linkType) {
             p2LinkOrder.push_back(linkType);
         }
+        link2Passed = true;
     } else if (std::string(argv[i]) == "-graphics") {
       includeGraphics = true;
     }
   }
+
+  random_device rd;
+  mt19937 rng(rd());
+
+  if (!link1Passed) {
+    p1LinkOrder = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
+    shuffle(p1LinkOrder.begin(), p1LinkOrder.end(), rng);
+  }
+  if (!link2Passed) {
+    p2LinkOrder = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
+    shuffle(p2LinkOrder.begin(), p2LinkOrder.end(), rng);
+  }
+
   // configure abilities
   vector<unique_ptr<Ability>> p1Abilities;
   vector<unique_ptr<Ability>> p2Abilities;
