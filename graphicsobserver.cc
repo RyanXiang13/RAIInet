@@ -1,5 +1,6 @@
 #include "graphicsobserver.h"
 #include "link.h"
+#include <unistd.h>
 
 GraphicsObserver::GraphicsObserver(Subject *sub, int startingPlayer)
     : subject{sub}, topPlayer{startingPlayer} {
@@ -10,10 +11,6 @@ GraphicsObserver::GraphicsObserver(Subject *sub, int startingPlayer)
 
 GraphicsObserver::~GraphicsObserver() {
     subject->detach(this);
-}
-
-void GraphicsObserver::displayWelcome() {
-    // hi
 }
 
 void GraphicsObserver::initialize() {    
@@ -172,6 +169,106 @@ void GraphicsObserver::displayAbilities(Player &player) {
     }
 }
 
-void GraphicsObserver::displayWin(int winner) {
+void GraphicsObserver::displayWelcome() {
+   window->fillRectangle(0, 0, WIDTH, HEIGHT, Xwindow::Black);
+   
+   int borderWidth = 20;
+   for(int i = 0; i < 3; i++) {
+       window->fillRectangle(
+           borderWidth * i, 
+           borderWidth * i, 
+           WIDTH - (2 * borderWidth * i), 
+           HEIGHT - (2 * borderWidth * i), 
+           Xwindow::DarkGray
+       );
+   }
+   
+   int boxWidth = 400;
+   int boxHeight = 200;
+   int boxX = (WIDTH - boxWidth) / 2;
+   int boxY = (HEIGHT - boxHeight) / 2;
+   
+   window->fillRectangle(boxX - 2, boxY - 2, boxWidth + 4, boxHeight + 4, Xwindow::Orange);
+   window->fillRectangle(boxX, boxY, boxWidth, boxHeight, Xwindow::Slate);
+   
+   // Welcome text
+   std::string msg = "Welcome to RAIInet";
+   int textWidth = msg.length() * 10;
+   int textX = (WIDTH - textWidth) / 2;
+   window->drawString(textX, HEIGHT/2, msg);
+   
+   int barWidth = 100;
+   int barHeight = 10;
+   window->fillRectangle(
+       boxX + 50, 
+       boxY + boxHeight - 40, 
+       barWidth, 
+       barHeight, 
+       Xwindow::Green
+   );
+   window->fillRectangle(
+       boxX + boxWidth - 150, 
+       boxY + boxHeight - 40, 
+       barWidth, 
+       barHeight, 
+       Xwindow::Red
+   );
+   
+   sleep(3);
+}
 
+void GraphicsObserver::displayWin(int winner) {
+   window->fillRectangle(0, 0, WIDTH, HEIGHT, Xwindow::Black);
+   
+   int borderWidth = 20;
+   for(int i = 0; i < 3; i++) {
+       window->fillRectangle(
+           borderWidth * i, 
+           borderWidth * i, 
+           WIDTH - (2 * borderWidth * i), 
+           HEIGHT - (2 * borderWidth * i), 
+           Xwindow::DarkGray
+       );
+   }
+   
+   int boxWidth = 400;
+   int boxHeight = 200;
+   int boxX = (WIDTH - boxWidth) / 2;
+   int boxY = (HEIGHT - boxHeight) / 2;
+   
+   int winnerColor = Xwindow::Green;
+   if (winner == 2) winnerColor = Xwindow::Red;
+   
+   window->fillRectangle(boxX - 2, boxY - 2, boxWidth + 4, boxHeight + 4, winnerColor);
+   window->fillRectangle(boxX, boxY, boxWidth, boxHeight, Xwindow::Slate);
+   
+   // Victory message
+   std::string msg = "Player " + std::to_string(winner) + " Wins!";
+   std::string subMsg = "Thanks for playing RAIInet";
+   int textWidth = msg.length() * 10;
+   int subTextWidth = subMsg.length() * 10;
+   int textX = (WIDTH - textWidth) / 2;
+   int subTextX = (WIDTH - subTextWidth) / 2;
+   
+   window->drawString(textX, HEIGHT/2 - 20, msg);
+   window->drawString(subTextX, HEIGHT/2 + 20, subMsg);
+   
+   int barWidth = 100;
+   int barHeight = 10;
+   window->fillRectangle(
+       boxX + 50,
+       boxY + boxHeight - 40,
+       barWidth,
+       barHeight,
+       winnerColor
+   );
+   window->fillRectangle(
+       boxX + boxWidth - 150,
+       boxY + boxHeight - 40,
+       barWidth,
+       barHeight,
+       winnerColor
+   );
+   
+   sleep(3);
 }
