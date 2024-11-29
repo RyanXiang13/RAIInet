@@ -1,6 +1,8 @@
 #include <iostream>
 #include <memory>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include "game.h"
 #include "player.h"
 #include "link.h"
@@ -43,18 +45,18 @@ int main()
 
   // Create players
   std::vector<std::unique_ptr<Ability>> p1Abilities;
-  p1Abilities.emplace_back(std::make_unique<SkipTurn>());
-  p1Abilities.emplace_back(std::make_unique<Scan>());
   p1Abilities.emplace_back(std::make_unique<Teleport>());
-  p1Abilities.emplace_back(std::make_unique<Firewall>());
+  p1Abilities.emplace_back(std::make_unique<LinkBoost>());
+  p1Abilities.emplace_back(std::make_unique<LinkBoost>());
   p1Abilities.emplace_back(std::make_unique<Download>());
+  p1Abilities.emplace_back(std::make_unique<Scan>());
 
   std::vector<std::unique_ptr<Ability>> p2Abilities;
-  p2Abilities.emplace_back(std::make_unique<Download>());
-  p2Abilities.emplace_back(std::make_unique<SkipTurn>());
   p2Abilities.emplace_back(std::make_unique<Firewall>());
-  p2Abilities.emplace_back(std::make_unique<Download>());
+  p2Abilities.emplace_back(std::make_unique<Firewall>());
   p2Abilities.emplace_back(std::make_unique<Scan>());
+  p2Abilities.emplace_back(std::make_unique<Polarize>());
+  p2Abilities.emplace_back(std::make_unique<Download>());
 
   auto player1 = Player::create(1, true, std::move(p1Abilities), std::move(p1Links));
   auto player2 = Player::create(2, false, std::move(p2Abilities), std::move(p2Links));
@@ -68,20 +70,25 @@ int main()
   game.attach(std::move(graphicsObserver));
   game.notifyObservers(&game);
   string command;
-
+  bool abilityUsed = false;
   while (cin >> command)
   {
     if (command == "ability")
     {
+      if (abilityUsed) {
+        cout << "Ability already used this turn" << endl;
+        continue;
+      }
       int ability;
       cin >> ability;
-      //Link *toDownload = game.getLinkFromID(id, game.notTurn());
       bool result = game.useAbility(ability, game.whosTurn());
       if (!result) {
         cout << "Ability failed" << endl;
+      } else {
+        abilityUsed = true;
       }
     }
-    if (command == "move")
+    else if (command == "move")
     {
       char id;
       char dir;
@@ -91,15 +98,19 @@ int main()
       {
         game.moveLink(toMove, dir);
       }
+      abilityUsed = false;
+      if (game.checkWon()) {
+        game.clearObservers();
+        break;
+      }
     }
     else if (command == "abilities")
     {
-      cout << "Debug: Displaying abilities" << endl;
       game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
     }
     else if (command == "board")
     {
-      continue;
+      game.notifyObservers(&game);
     }
     else if (command == "sequence")
     {
@@ -110,7 +121,70 @@ int main()
       game.clearObservers();
       break;
     }
-    // add rest of commands
+    else if (command == "sequence") 
+    {
+      string filename;
+      cin >> filename;
+      
+      ifstream commandFile(filename);
+      if (!commandFile) {
+        cout << "Error: Could not open file " << filename << endl;
+        continue;
+      }
+
+      string fileCommand;
+      string line;
+      while (getline(commandFile, line)) {
+        istringstream iss(line);
+        iss >> fileCommand;
+        
+        if (fileCommand == "ability") {
+          if (abilityUsed) {
+            cout << "Ability already used this turn" << endl;
+            continue;
+          }
+          int ability;
+          iss >> ability;
+          string remaining;
+          getline(iss, remaining);
+          stringstream temp(remaining);
+          auto cinbuf = cin.rdbuf(temp.rdbuf());
+          bool result = game.useAbility(ability, game.whosTurn());
+          cin.rdbuf(cinbuf);
+          
+          if (!result) {
+              cout << "Ability failed" << endl;
+          } else {
+              abilityUsed = true;
+          }
+        }
+        else if (fileCommand == "move") {
+          char id, dir;
+          iss >> id >> dir;
+          Link *toMove = game.getLinkFromID(id, game.whosTurn());
+          if (toMove && !toMove->getIsDownloaded()) {
+            game.moveLink(toMove, dir);
+          }
+          abilityUsed = false;
+          if (game.checkWon()) {
+            game.clearObservers();
+            break;
+          }
+        }
+        else if (fileCommand == "abilities") {
+            game.displayAbilities(game.getPlayer(game.whosTurn() - 1).get());
+        }
+        else if (fileCommand == "board") {
+            game.notifyObservers(&game);
+        }
+        else if (fileCommand == "quit") {
+            game.clearObservers();
+            commandFile.close();
+            return 0;
+        }
+      }
+      commandFile.close();
+    }
   }
   return 0;
 }

@@ -55,7 +55,7 @@ char Game::charAt(int i, int j)
     {
         return 'S';
     }
-    else if (board[i][j]->getIsFirewall() && board[i][j]->getLink())
+    else if (board[i][j]->getIsFirewall() && board[i][j]->getLink()) // FIX
     {
       return board[i][j]->getLink()->getID();
     }
@@ -69,16 +69,26 @@ char Game::charAt(int i, int j)
     }
     else
     {
-        return board[i][j]->getLink()->getID();
+      return board[i][j]->getLink()->getID();
     }
+}
+bool Game::checkWon() {
+  if (players[0]->getNumOfVirus() == 4 || players[1]->getNumOfData() == 4) {
+    displayWin(2);
+    return true;
+  } else if (players[1]->getNumOfVirus() == 4 || players[0]->getNumOfData() == 4) {
+    displayWin(1);
+    return true;
+  }
+  return false;
 }
 
 int Game::whosTurn()
 {
     if (players[0]->getIsTurn())
-        return 1;
+      return 1;
     if (players[1]->getIsTurn())
-        return 2;
+      return 2;
     return 1;
 }
 
@@ -112,7 +122,24 @@ bool Game::moveLink(Link *l, char dir)
         l->setIsFound(true);
         if (l->getIsVirus())
         {
-            players[l->getPlayerID() - 1]->download(l);
+          players[l->getPlayerID() - 1]->download(l);
+        } 
+        else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
+        {
+          // CONFLICT RESOLUTION
+          l->setIsFound(true);
+          board[l->getRow()][l->getCol()]->getLink()->setIsFound(true);
+          if (l->battleLink(board[l->getRow()][l->getCol()]->getLink()))
+          {
+            players[l->getPlayerID() - 1]->download(board[l->getRow()][l->getCol()]->getLink());
+            board[l->getRow()][l->getCol()]->setLink(l);
+          }
+          else
+          {
+            players[board[l->getRow()][l->getCol()]->getLink()->getPlayerID() - 1]->download(l);
+          }
+        } else {
+          board[l->getRow()][l->getCol()]->setLink(l);
         }
     }
     else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() == l->getPlayerID())
@@ -126,8 +153,7 @@ bool Game::moveLink(Link *l, char dir)
       l->setRow(curRow);
       l->setCol(curCol);
       return false;
-    }
-    else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
+    } else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
     {
         // CONFLICT RESOLUTION
         l->setIsFound(true);
@@ -146,7 +172,6 @@ bool Game::moveLink(Link *l, char dir)
     {
         board[l->getRow()][l->getCol()]->setLink(l);
     }
-    std::cout << curRow << curCol << std::endl;
     board[curRow][curCol]->setLink(nullptr);
     int currentPlayer = l->getPlayerID() - 1;
     players[currentPlayer]->setTurn(false);
