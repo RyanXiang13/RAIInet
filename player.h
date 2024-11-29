@@ -30,9 +30,6 @@ public:
     void addAbility(std::unique_ptr<Ability>);
     void download(Link* l);
     void addOwnedLink(std::unique_ptr<Link> l);
-    //void removeAbility(int a); // removes one count of the ability from the corresponding index
-    //void removeOwnedLink(std::unique_ptr<Link> l);
-    //bool useAbility(int a) const;                       // checks if the ability >= 1
     int getAbilityCount() const;                        // returns the sum of array
 };
 

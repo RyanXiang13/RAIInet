@@ -36,10 +36,11 @@ void GraphicsObserver::drawFullBoard() {
             char piece = subject->charAt(i, j);
             int colour = ((i + j) % 2 == 0) ? Xwindow::LightGray : Xwindow::DarkGray;
             
+            // checks if firewall
             if (piece == 'w' || piece == 'm') {
                 colour = Xwindow::Orange;
             } else if (piece != '.') {
-                bool isPieceFound = false;
+                bool isPieceFound = false; // default unless the following search finds the piece
                 
                 const auto& topPlayerLinks = subject->getPlayer(topPlayer - 1)->getOwnedLinks();
                 for (const auto& link : topPlayerLinks) {

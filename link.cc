@@ -123,22 +123,6 @@ void Link::addMoveStrength()
 {
     this->moveStrength++;
 }
-/*
-void Link::addAbility(int abilityID)
-{
-    this->abilities[abilityID]++;
-}
-
-void Link::removeAbility(int abilityID)
-{
-    this->abilities[abilityID]--;
-}
-
-bool Link::hasAbility(int abilityID) const
-{
-    return this->abilities[abilityID] > 0; // as long as there are at least 1
-}
-*/
 
 bool Link::isOnOpponentFirewall(std::vector<std::vector<std::unique_ptr<Cell>>> &board) const
 {

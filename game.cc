@@ -72,6 +72,7 @@ char Game::charAt(int i, int j)
       return board[i][j]->getLink()->getID();
     }
 }
+
 bool Game::checkWon() {
   if (players[0]->getNumOfVirus() == 4 || players[1]->getNumOfData() == 4) {
     displayWin(2);

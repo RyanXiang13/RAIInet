@@ -44,33 +44,7 @@ void Player::addOwnedLink(std::unique_ptr<Link> l)
 {
     this->ownedLinks.push_back(std::move(l)); // add the name of the link as we only want one owner for unique pointers (and that is downloadedLinks)
 }
-/*
-void Player::removeAbility(int a)
-{
-    this->abilities[a]--; // remove one count of the ability from the corresponding index
-}
 
-
-void Player::removeOwnedLink(std::string s)
-{
-    // this may or may not be needed when one of the players loses their link
-    std::vector<std::string>::iterator it = std::find(this->ownedLinks.begin(), this->ownedLinks.end(), s);
-    if (it != this->ownedLinks.end()) // if the link is found
-    {
-        this->ownedLinks.erase(it); // simply delete the link name from the vector
-    }
-}
-
-
-bool Player::useAbility(int a) const
-{
-    for (const auto& ability : abilities) {
-        if (ability->getID() == a && !ability->isUsed()) {
-            ability->use();
-        }
-    }
-}
-*/
 int Player::getAbilityCount() const
 {
     int sum = 0;
