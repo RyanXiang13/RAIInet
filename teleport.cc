@@ -16,7 +16,7 @@ bool Teleport::use(int curPlayerID, Game* game)
     Cell* c = game->getCell(row, col);
     
     // verify conditions
-    if (!l || !c || l->getIsDownloaded() || !c->getIsServerPort() || !c->getCol()) {
+    if (!l || !c || l->getIsDownloaded() || c->getIsServerPort() || c->getLink()) {
         return false;
     }
     
@@ -26,5 +26,9 @@ bool Teleport::use(int curPlayerID, Game* game)
     l->setCol(col);
     c->setLink(l);
     setUsed(true);
+    int currentPlayer = l->getPlayerID() - 1;
+    game->getPlayer(currentPlayer)->setTurn(false);
+    game->getPlayer(1 - currentPlayer)->setTurn(true);
+    game->notifyObservers(game);
     return true;
 }
