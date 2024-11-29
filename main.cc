@@ -12,7 +12,7 @@ int main()
 {
   // p1 links
   std::vector<std::unique_ptr<Link>> p1Links;
-  p1Links.push_back(Link::create(7, 0, 1, 1, false, 'a', 1, false));
+  p1Links.push_back(Link::create(0, 0, 1, 1, false, 'a', 1, false));
   p1Links.push_back(Link::create(0, 1, 2, 1, false, 'b', 1, false));
   p1Links.push_back(Link::create(0, 2, 3, 1, false, 'c', 1, false));
   p1Links.push_back(Link::create(1, 3, 4, 1, false, 'd', 1, false));
@@ -24,7 +24,7 @@ int main()
 
   // p2 links
   std::vector<std::unique_ptr<Link>> p2Links;
-  p2Links.push_back(Link::create(6, 0, 1, 1, false, 'A', 2, false));
+  p2Links.push_back(Link::create(7, 0, 1, 1, false, 'A', 2, false));
   p2Links.push_back(Link::create(7, 1, 2, 1, false, 'B', 2, false));
   p2Links.push_back(Link::create(7, 2, 3, 1, false, 'C', 2, false));
   p2Links.push_back(Link::create(6, 3, 4, 1, false, 'D', 2, false));

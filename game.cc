@@ -80,11 +80,6 @@ bool Game::moveLink(Link *l, char dir)
 {
     int curRow = l->getRow();
     int curCol = l->getCol();
-    /*
-    if (!l->moveLink(dir)){
-      return false;
-    }
-    */
     l->moveLink(dir);
     if (l->isPastOpponentBoardEdge())
     {
@@ -109,6 +104,12 @@ bool Game::moveLink(Link *l, char dir)
         l->setRow(curRow);
         l->setCol(curCol);
         return false;
+    }
+    else if (board[l->getRow()][l->getCol()]->getIsServerPort() == l->getPlayerID())
+    {
+      l->setRow(curRow);
+      l->setCol(curCol);
+      return false;
     }
     else if (board[l->getRow()][l->getCol()]->getLink() && board[l->getRow()][l->getCol()]->getLink()->getPlayerID() != l->getPlayerID())
     {
