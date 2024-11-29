@@ -26,7 +26,7 @@ private:
     std::vector<std::vector<char>> previous;
 
     void displayWin(int winner) override;
-    void displayWelcome();
+    void displayWelcome() override;
     void initialize();
     
     void drawFullBoard();
