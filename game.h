@@ -37,6 +37,7 @@ public:
     void detach(Observer *o) override;
     void notifyObservers(Subject *whoFrom) override;
     void clearObservers() override;
+    bool checkWon();
 };
 
 #endif

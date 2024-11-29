@@ -34,3 +34,9 @@ void Subject::displayAbilities(Player *player) {
         ob->displayAbilities(*player);
     }
 }
+
+void Subject::displayWin(int winner) {
+    for (const auto&ob : observers) {
+        ob->displayWin(winner);
+    }
+}

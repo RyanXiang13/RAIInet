@@ -20,6 +20,7 @@ public:
     TextObserver(bool twoPlayers);
     void notify(Subject &subject) override;
     void displayAbilities(Player& player);
+    void displayWin(int winner);
 };
 
 #endif

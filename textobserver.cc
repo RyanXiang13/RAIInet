@@ -55,6 +55,14 @@ void TextObserver::printOwnedLinks(Player& player) {
 
 }
 
+void TextObserver::displayWin(int winner) {
+  if (winner == 1) {
+    cout << "Player 1 wins!" << endl;
+  } else if (winner == 2) {
+    cout << "Player 2 wins!" << endl;
+  }
+}
+
 void TextObserver::updateDownloaded(Player& player) {
   cout << "Downloaded: " << player.getNumOfData() << "D, " 
     << player.getNumOfVirus() << "V" << endl;

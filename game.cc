@@ -72,13 +72,23 @@ char Game::charAt(int i, int j)
       return board[i][j]->getLink()->getID();
     }
 }
+bool Game::checkWon() {
+  if (players[0]->getNumOfVirus() == 4 || players[1]->getNumOfData() == 4) {
+    displayWin(2);
+    return true;
+  } else if (players[1]->getNumOfVirus() == 4 || players[0]->getNumOfData() == 4) {
+    displayWin(1);
+    return true;
+  }
+  return false;
+}
 
 int Game::whosTurn()
 {
     if (players[0]->getIsTurn())
-        return 1;
+      return 1;
     if (players[1]->getIsTurn())
-        return 2;
+      return 2;
     return 1;
 }
 

@@ -96,6 +96,10 @@ int main()
         game.moveLink(toMove, dir);
       }
       abilityUsed = false;
+      if (game.checkWon()) {
+        game.clearObservers();
+        break;
+      }
     }
     else if (command == "abilities")
     {

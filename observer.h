@@ -8,6 +8,7 @@ class Observer
 public:
     virtual void notify(Subject &subject) = 0;
     virtual void displayAbilities(Player &player) = 0;
+    virtual void displayWin(int winner) = 0;
     virtual ~Observer() = default;
 };
 
